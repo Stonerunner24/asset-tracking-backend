@@ -1,7 +1,7 @@
 {
-  "name": "tutorial-backend",
+  "name": "asset-backend",
   "version": "1.0.0",
-  "description": "Tutorial Node.js with Rest API",
+  "description": "Asset Tracking Node.js with Rest API",
   "main": "server.js",
   "scripts": {
     "test": "jest --",

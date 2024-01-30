@@ -14,6 +14,8 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
+db.building = require("./building.model.js")(sequelize, Sequelize);
+db.room = require("./room.model.js")(sequelize, Sequelize);
 db.user = require("./user.model.js")(sequelize, Sequelize);
 db.session = require("./session.model.js")(sequelize, Sequelize);
 db.tutorial = require("./tutorial.model.js")(sequelize, Sequelize);
@@ -31,6 +33,18 @@ db.session.belongsTo(
   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
 );
 
+//foreign key for room
+db.building.hasMany(
+  db.room, 
+  { as: "room" },
+  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+);
+
+db.room.belongsTo(
+  db.building,
+  {foreignKey: {allowNull: false}, onDelete: "CASCADE" }
+);
+  
 // foreign key for tutorials
 db.user.hasMany(
   db.tutorial,

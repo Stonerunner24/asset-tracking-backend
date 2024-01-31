@@ -1,20 +1,16 @@
 module.exports = (sequelize, Sequelize) => {
-    const Model = sequelize.define("model", {
+    const Brand = sequelize.define("brand", {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
       },
-      model: {
-        varchar: Sequelize.STRING,
+      name: {
+        type: Sequelize.STRING,
         allowNull: false,
-      },
-      weightInPounds: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
       },
     });
   
-    return Model;
+    return Brand;
   };
   

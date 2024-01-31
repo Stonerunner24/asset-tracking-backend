@@ -18,7 +18,10 @@ db.user = require("./user.model.js")(sequelize, Sequelize);
 db.session = require("./session.model.js")(sequelize, Sequelize);
 db.tutorial = require("./tutorial.model.js")(sequelize, Sequelize);
 db.lesson = require("./lesson.model.js")(sequelize, Sequelize);
+// TODO: Make asset models
 
+
+// TODO: Make asset foreign keys
 // foreign key for session
 db.user.hasMany(
   db.session,

@@ -19,7 +19,16 @@ db.session = require("./session.model.js")(sequelize, Sequelize);
 db.tutorial = require("./tutorial.model.js")(sequelize, Sequelize);
 db.lesson = require("./lesson.model.js")(sequelize, Sequelize);
 // TODO: Make asset models
-
+db.assignment = require("./assignment.model.js")(sequelize, Sequelize);
+db.brand = require("./brand.model.js")(sequelize, Sequelize);
+db.category = require("./category.model.js")(sequelize, Sequelize);
+db.field = require("./field.model.js")(sequelize, Sequelize);
+db.item = require("./item.model.js")(sequelize, Sequelize);
+db.itemField = require("./itemField.model.js")(sequelize, Sequelize);
+db.model = require("./model.model.js")(sequelize, Sequelize);
+db.modelField = require("./modelField.model.js")(sequelize, Sequelize);
+db.type = require("./type.model.js")(sequelize, Sequelize);
+db.typeField = require("./typeField.model.js")(sequelize, Sequelize);
 
 // TODO: Make asset foreign keys
 // foreign key for session

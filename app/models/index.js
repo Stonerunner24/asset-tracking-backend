@@ -71,11 +71,30 @@ db.lesson.belongsTo(
 // foreign key for type
 db.category.hasMany(
   db.type,
-  {foreignKey: 'categoryId'}
+  { foreignKey: 'categoryId' },
 );
 db.type.belongsTo(
   db.category,
-  {foreignKey: 'categoryId'}
+  { foreignKey: 'categoryId' },
+)
+
+// foreign key for model
+db.type.hasMany(
+  db.model,
+  { foreignKey: 'typeId' },
+)
+db.model.belongsTo(
+  db.type,
+  { foreignKey: 'typeId' },
+)
+
+db.brand.hasOne(
+  db.model,
+  { foreignKey: 'brandId' },
+)
+db.model.belongsTo(
+  db.brand,
+  { foreignKey: 'brandId' },
 )
 
 module.exports = db;

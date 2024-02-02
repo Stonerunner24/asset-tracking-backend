@@ -1,22 +1,30 @@
 module.exports = (sequelize, Sequelize) => {
     const Building = sequelize.define("building", {
         id:{
-            type: Sequelize.INT
+            type: Sequelize.INTEGER,
+            autoIncrement: true,
+            allowNull: false,
+            primaryKey: true
         },
         buildingTag:{
-            type: Sequelize.STRING(10)
+            type: Sequelize.STRING(10),
+            allowNull: false
         },
         buildingName:{
-            type: Sequelize.STRING(50)
+            type: Sequelize.STRING(50),
+            allowNull: false
         },
         yearBuilt:{
-            type : Sequelize.INT
+            type : Sequelize.INTEGER,
+            allowNull: false
         },
         sqFeet:{
-            type: Sequelize.INT
+            type: Sequelize.INTEGER,
+            allowNull: false
         },
         numStories:{
-            type: Sequelize.INT
+            type: Sequelize.INT,
+            allowNull: false
         },
         hasElevator:{
             type: Sequelize.BOOLEAN
@@ -34,7 +42,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING
         },
         value:{
-            type: Sequelize.INT
+            type: Sequelize.INTEGER
         }
     });
     return Building;

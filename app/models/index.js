@@ -30,7 +30,6 @@ db.modelField = require("./modelField.model.js")(sequelize, Sequelize);
 db.type = require("./type.model.js")(sequelize, Sequelize);
 db.typeField = require("./typeField.model.js")(sequelize, Sequelize);
 
-// TODO: Make asset foreign keys
 // foreign key for session
 db.user.hasMany(
   db.session,
@@ -66,5 +65,17 @@ db.lesson.belongsTo(
   { as: "tutorial" },
   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
 );
+
+// TODO: Make asset foreign keys
+
+// foreign key for type
+db.category.hasMany(
+  db.type,
+  {foreignKey: 'categoryId'}
+);
+db.type.belongsTo(
+  db.category,
+  {foreignKey: 'categoryId'}
+)
 
 module.exports = db;

@@ -38,4 +38,4 @@ module.exports = (sequelize, Sequelize) => {
         }
     });
     return Building;
-}
+};

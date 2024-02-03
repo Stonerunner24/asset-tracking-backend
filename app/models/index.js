@@ -18,7 +18,7 @@ db.user = require("./user.model.js")(sequelize, Sequelize);
 db.session = require("./session.model.js")(sequelize, Sequelize);
 db.tutorial = require("./tutorial.model.js")(sequelize, Sequelize);
 db.lesson = require("./lesson.model.js")(sequelize, Sequelize);
-// TODO: Make asset models
+// asset models
 db.assignment = require("./assignment.model.js")(sequelize, Sequelize);
 db.brand = require("./brand.model.js")(sequelize, Sequelize);
 db.category = require("./category.model.js")(sequelize, Sequelize);
@@ -78,7 +78,7 @@ db.type.belongsTo(
   { foreignKey: 'categoryId' },
 )
 
-// foreign key for model
+// foreign keys for model
 db.type.hasMany(
   db.model,
   { foreignKey: 'typeId' },
@@ -97,7 +97,7 @@ db.model.belongsTo(
   { foreignKey: 'brandId' },
 )
 
-// foreign key for typeField
+// foreign keys for typeField
 db.field.hasOne(
   db.typeField,
   { foreignKey: 'fieldId' },
@@ -116,7 +116,7 @@ db.typeField.belongsTo(
   { foreignKey: 'typeId' },
 )
 
-// foreign key for modelField
+// foreign keys for modelField
 db.model.hasOne(
   db.modelField,
   { foreignKey: 'modelId' },
@@ -131,6 +131,25 @@ db.field.hasOne(
   { foreignKey: 'fieldId' },
 )
 db.modelField.belongsTo(
+  db.field,
+  { foreignKey: 'fieldId' },
+)
+
+// foreign keys for itemField
+db.item.hasOne(
+  db.itemField,
+  { foreignKey: 'itemId' },
+)
+db.itemField.belongsTo(
+  db.item,
+  { foreignKey: 'itemId' },
+)
+
+db.field.hasOne(
+  db.itemField,
+  { foreignKey: 'fieldId' },
+)
+db.itemField.belongsTo(
   db.field,
   { foreignKey: 'fieldId' },
 )

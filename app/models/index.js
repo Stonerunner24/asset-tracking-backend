@@ -97,4 +97,23 @@ db.model.belongsTo(
   { foreignKey: 'brandId' },
 )
 
+// foreign key for typeField
+db.field.hasOne(
+  db.typeField,
+  { foreignKey: fieldId },
+),
+db.typeField.belongsTo(
+  db.field,
+  { foreignKey: fieldId },
+)
+
+db.type.hasOne(
+  db.typeField,
+  { foreignKey: typeId },
+)
+db.typeField.belongsTo(
+  db.type,
+  { foreignKey: typeId },
+)
+
 module.exports = db;

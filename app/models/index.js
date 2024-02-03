@@ -100,20 +100,39 @@ db.model.belongsTo(
 // foreign key for typeField
 db.field.hasOne(
   db.typeField,
-  { foreignKey: fieldId },
+  { foreignKey: 'fieldId' },
 ),
 db.typeField.belongsTo(
   db.field,
-  { foreignKey: fieldId },
+  { foreignKey: 'fieldId' },
 )
 
 db.type.hasOne(
   db.typeField,
-  { foreignKey: typeId },
+  { foreignKey: 'typeId' },
 )
 db.typeField.belongsTo(
   db.type,
-  { foreignKey: typeId },
+  { foreignKey: 'typeId' },
+)
+
+// foreign key for modelField
+db.model.hasOne(
+  db.modelField,
+  { foreignKey: 'modelId' },
+)
+db.modelField.belongsTo(
+  db.modelField,
+  { foreignKey: 'modelId' },
+)
+
+db.field.hasOne(
+  db.modelField,
+  { foreignKey: 'fieldId' },
+)
+db.modelField.belongsTo(
+  db.field,
+  { foreignKey: 'fieldId' },
 )
 
 module.exports = db;

@@ -154,4 +154,14 @@ db.itemField.belongsTo(
   { foreignKey: 'fieldId' },
 )
 
+// foreign keys for item
+db.model.hasMany(
+  db.item,
+  { foreignKey: 'modelId' },
+)
+db.item.belongsTo(
+  db.model,
+  { foreignKey: 'modelId' },
+)
+
 module.exports = db;

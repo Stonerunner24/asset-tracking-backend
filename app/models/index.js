@@ -164,4 +164,7 @@ db.item.belongsTo(
   { foreignKey: 'modelId' },
 )
 
+// foreign keys for assignment
+
+
 module.exports = db;

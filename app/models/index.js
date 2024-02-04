@@ -165,6 +165,40 @@ db.item.belongsTo(
 )
 
 // foreign keys for assignment
+db.item.hasMany(
+  db.assignment,
+  { foreignKey: 'itemId' },
+)
+db.assignment.belongsTo(
+  db.item,
+  { foreignKey: 'itemId' },
+)
 
+db.person.hasMany(
+  db.assignment,
+  { foreignKey: 'personId' },
+)
+db.assignment.belongsTo(
+  db.person,
+  { foreignKey: 'personId' },
+)
+
+db.building.hasMany(
+  db.assignment,
+  { foreignKey: 'buildingId' },
+)
+db.assignment.belongsTo(
+  db.assignment,
+  { foreignKey: 'buildingId' },
+)
+
+db.room.hasMany(
+  db.assignment,
+  { foreignKey: 'roomId' },
+)
+db.assignment.belongsTo(
+  db.room,
+  { foreignKey: 'roomId' },
+)
 
 module.exports = db;

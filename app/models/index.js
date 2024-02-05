@@ -18,7 +18,7 @@ db.user = require("./user.model.js")(sequelize, Sequelize);
 db.session = require("./session.model.js")(sequelize, Sequelize);
 db.tutorial = require("./tutorial.model.js")(sequelize, Sequelize);
 db.lesson = require("./lesson.model.js")(sequelize, Sequelize);
-// asset models
+// ======================================================================
 db.assignment = require("./assignment.model.js")(sequelize, Sequelize);
 db.brand = require("./brand.model.js")(sequelize, Sequelize);
 db.category = require("./category.model.js")(sequelize, Sequelize);
@@ -66,7 +66,7 @@ db.lesson.belongsTo(
   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
 );
 
-// TODO: Make asset foreign keys
+// ================================================================
 
 // foreign key for type
 db.category.hasMany(

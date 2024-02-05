@@ -6,7 +6,6 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: false,
         primaryKey: true
       },
-      
     });
     return Permission;
   };

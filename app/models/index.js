@@ -78,4 +78,17 @@ db.lesson.belongsTo(
   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
 );
 
+//foreign key for renovations
+db.building.hasMany(
+  db.renovation,
+  { as: "renovation" },
+  { foreignKey: "buildingId"}
+);
+
+db.renovation.belongsTo(
+  db.building,
+  {as: "building" },
+  { foreignKey: "buildingId"}
+);
+
 module.exports = db;

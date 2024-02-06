@@ -54,29 +54,9 @@ db.room.belongsTo(
   {foreignKey: {allowNull: false}, onDelete: "CASCADE" }
 );
   
-// foreign key for tutorials
-db.user.hasMany(
-  db.tutorial,
-  { as: "tutorial" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
-db.tutorial.belongsTo(
-  db.user,
-  { as: "user" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
 
-// foreign key for lessons
-db.tutorial.hasMany(
-  db.lesson,
-  
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
-db.lesson.belongsTo(
-  db.tutorial,
- 
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
+
+
 
 //foreign key for renovations
 db.building.hasMany(
@@ -100,6 +80,16 @@ db.item.hasMany(
 db.itemInformation.belongsTo(
   db.item,
   { foreignKey: "itemId"}
+);
+// foreign key for Item
+db.model.hasMany(
+  db.item,
+  { foreignKey: "modelId"}
+);
+
+db.item.belongsTo(
+  db.model,
+  { foreignKey: "modelId"}
 );
 
 //repair foreign keys
@@ -132,6 +122,28 @@ db.vendor.hasMany(
 db.repair.belongsto(
   db.vendor,
   { foreignKey: "vendorId" } 
+);
+
+//foreign key for permission
+db.role.hasMany(
+  db.permission, { foreignKey: "roleId" }
+);
+
+db.permission.belongsTo(
+  db.role,
+  { foreignKey: "roleId" }
+);
+
+//foreign key for user
+
+db.role.hasMany(
+  db.user, 
+  {foreignKey: "roleId"}
+  );
+
+db.user.belongsTo(
+  db.role,
+  { foreignKey: "roleId" }
 );
 
 module.exports = db;

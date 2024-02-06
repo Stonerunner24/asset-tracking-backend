@@ -14,8 +14,9 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
+
 db.building = require("./building.model.js")(sequelize, Sequelize);
-db.itemInformation = require("./itemInformation.model.js");
+db.itemInformation = require("./itemInformation.model.js")(sequelize, Sequelize);
 db.lesson = require("./lesson.model.js")(sequelize, Sequelize);
 db.permission = require("./permission.model.js")(sequelize, Sequelize);
 db.person = require("./person.model.js")(sequelize, Sequelize);
@@ -26,8 +27,17 @@ db.room = require("./room.model.js")(sequelize, Sequelize);
 db.session = require("./session.model.js")(sequelize, Sequelize);
 db.tutorial = require("./tutorial.model.js")(sequelize, Sequelize);
 db.user = require("./user.model.js")(sequelize, Sequelize);
-
-
+//below is daniels stuff
+db.assignment = require("./assignment.model.js")(sequelize, Sequelize);
+db.brand = require("./brand.model.js")(sequelize, Sequelize);
+db.category = require("./category.model.js")(sequelize, Sequelize);
+db.field = require("./field.model.js")(sequelize, Sequelize);
+db.item = require("./item.model.js")(sequelize, Sequelize);
+db.itemField = require("./itemField.model.js")(sequelize, Sequelize);
+db.model = require("./model.model.js")(sequelize, Sequelize);
+db.modelField = require("./modelField.model.js")(sequelize, Sequelize);
+db.type = require("./type.model.js")(sequelize, Sequelize);
+db.typeField = require("./typeField.model.js")(sequelize, Sequelize);
 
 
 // foreign key for session
@@ -145,5 +155,140 @@ db.user.belongsTo(
   db.role,
   { foreignKey: "roleId" }
 );
+
+// ================================================================
+
+// foreign key for type
+db.category.hasMany(
+  db.type,
+  { foreignKey: 'categoryId' },
+);
+db.type.belongsTo(
+  db.category,
+  { foreignKey: 'categoryId' },
+)
+
+// foreign keys for model
+db.type.hasMany(
+  db.model,
+  { foreignKey: 'typeId' },
+)
+db.model.belongsTo(
+  db.type,
+  { foreignKey: 'typeId' },
+)
+
+db.brand.hasOne(
+  db.model,
+  { foreignKey: 'brandId' },
+)
+db.model.belongsTo(
+  db.brand,
+  { foreignKey: 'brandId' },
+)
+
+// foreign keys for typeField
+db.field.hasOne(
+  db.typeField,
+  { foreignKey: 'fieldId' },
+),
+db.typeField.belongsTo(
+  db.field,
+  { foreignKey: 'fieldId' },
+)
+
+db.type.hasOne(
+  db.typeField,
+  { foreignKey: 'typeId' },
+)
+db.typeField.belongsTo(
+  db.type,
+  { foreignKey: 'typeId' },
+)
+
+// foreign keys for modelField
+db.model.hasOne(
+  db.modelField,
+  { foreignKey: 'modelId' },
+)
+db.modelField.belongsTo(
+  db.modelField,
+  { foreignKey: 'modelId' },
+)
+
+db.field.hasOne(
+  db.modelField,
+  { foreignKey: 'fieldId' },
+)
+db.modelField.belongsTo(
+  db.field,
+  { foreignKey: 'fieldId' },
+)
+
+// foreign keys for itemField
+db.item.hasOne(
+  db.itemField,
+  { foreignKey: 'itemId' },
+)
+db.itemField.belongsTo(
+  db.item,
+  { foreignKey: 'itemId' },
+)
+
+db.field.hasOne(
+  db.itemField,
+  { foreignKey: 'fieldId' },
+)
+db.itemField.belongsTo(
+  db.field,
+  { foreignKey: 'fieldId' },
+)
+
+// foreign keys for item
+db.model.hasMany(
+  db.item,
+  { foreignKey: 'modelId' },
+)
+db.item.belongsTo(
+  db.model,
+  { foreignKey: 'modelId' },
+)
+
+// foreign keys for assignment
+db.item.hasMany(
+  db.assignment,
+  { foreignKey: 'itemId' },
+)
+db.assignment.belongsTo(
+  db.item,
+  { foreignKey: 'itemId' },
+)
+
+db.person.hasMany(
+  db.assignment,
+  { foreignKey: 'personId' },
+)
+db.assignment.belongsTo(
+  db.person,
+  { foreignKey: 'personId' },
+)
+
+db.building.hasMany(
+  db.assignment,
+  { foreignKey: 'buildingId' },
+)
+db.assignment.belongsTo(
+  db.assignment,
+  { foreignKey: 'buildingId' },
+)
+
+db.room.hasMany(
+  db.assignment,
+  { foreignKey: 'roomId' },
+)
+db.assignment.belongsTo(
+  db.room,
+  { foreignKey: 'roomId' },
+)
 
 module.exports = db;

@@ -25,6 +25,7 @@ db.role = require("./room.model.js")(sequelize, Sequelize);
 db.room = require("./room.model.js")(sequelize, Sequelize);
 db.session = require("./session.model.js")(sequelize, Sequelize);
 db.user = require("./user.model.js")(sequelize, Sequelize);
+db.vendor = require("./vendor.model.js")(sequelize, Sequelize);
 //below is daniels stuff
 db.assignment = require("./assignment.model.js")(sequelize, Sequelize);
 db.brand = require("./brand.model.js")(sequelize, Sequelize);

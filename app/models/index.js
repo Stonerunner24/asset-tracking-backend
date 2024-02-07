@@ -17,7 +17,6 @@ db.sequelize = sequelize;
 
 db.building = require("./building.model.js")(sequelize, Sequelize);
 db.itemInformation = require("./itemInformation.model.js")(sequelize, Sequelize);
-db.lesson = require("./lesson.model.js")(sequelize, Sequelize);
 db.permission = require("./permission.model.js")(sequelize, Sequelize);
 db.person = require("./person.model.js")(sequelize, Sequelize);
 db.renovation = require("./renovation.model.js")(sequelize, Sequelize);
@@ -25,7 +24,6 @@ db.repair = require("./repair.model.js")(sequelize, Sequelize);
 db.role = require("./room.model.js")(sequelize, Sequelize);
 db.room = require("./room.model.js")(sequelize, Sequelize);
 db.session = require("./session.model.js")(sequelize, Sequelize);
-db.tutorial = require("./tutorial.model.js")(sequelize, Sequelize);
 db.user = require("./user.model.js")(sequelize, Sequelize);
 //below is daniels stuff
 db.assignment = require("./assignment.model.js")(sequelize, Sequelize);

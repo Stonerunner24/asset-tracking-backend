@@ -6,7 +6,7 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true,
       },
       model: {
-        varchar: Sequelize.STRING,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       weightInPounds: {

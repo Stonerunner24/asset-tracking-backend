@@ -128,7 +128,7 @@ db.vendor.hasMany(
   { foreignKey: "vendorId" }
 );
 
-db.repair.belongsto(
+db.repair.belongsTo(
   db.vendor,
   { foreignKey: "vendorId" } 
 );

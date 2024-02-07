@@ -5,18 +5,8 @@ module.exports = (sequelize, Sequelize) => {
       autoIncrement: true,
       primaryKey: true,
     },
-    fName: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-    lName: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-    email: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
+    //do the person foreign key in index later
+ 
     // refresh_token: {
     //   type: Sequelize.STRING(512),
     //   allowNull: true

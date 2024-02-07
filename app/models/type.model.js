@@ -1,23 +1,20 @@
 module.exports = (sequelize, Sequelize) => {
-    const Session = sequelize.define("session", {
+    const Type = sequelize.define("type", {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
       },
       token: {
-        type: Sequelize.STRING(3000),
-        allowNull: false,
-      },
-      email: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      expirationDate: {
-        type: Sequelize.DATE,
+      active: {
+        type: Sequelize.BOOLEAN,
         allowNull: false,
       },
     });
   
-    return Session;
+    return Type;
   };
+  

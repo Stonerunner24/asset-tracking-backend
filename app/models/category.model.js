@@ -1,7 +1,7 @@
 module.exports = (sequelize, Sequelize) => {
     const Category = sequelize.define("category", {
-      int: {
-        type: Sequelize.DATE,
+      id: {
+        type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },

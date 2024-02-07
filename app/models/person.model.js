@@ -14,7 +14,8 @@ module.exports = (sequelize, Sequelize) => {
         },
         campusId:{
             type: Sequelize.INTEGER,
-            allowNull: false
+            primaryKey: true,
+            autoIncrement: false,
         }
 
     });

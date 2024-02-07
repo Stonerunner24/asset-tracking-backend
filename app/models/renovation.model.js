@@ -6,7 +6,7 @@ module.exports = (sequelize, Sequelize) => {
             primaryKey: true,
         },
         date: {
-            type: Sequelize.date,
+            type: Sequelize.DATE,
             allowNull: false,
         },
         cost: {

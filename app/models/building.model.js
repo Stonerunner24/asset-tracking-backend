@@ -23,7 +23,7 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false
         },
         numStories:{
-            type: Sequelize.INT,
+            type: Sequelize.INTEGER,
             allowNull: false
         },
         hasElevator:{

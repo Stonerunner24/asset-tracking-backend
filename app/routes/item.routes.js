@@ -12,7 +12,7 @@ module.exports = (app) => {
     router.post("/", items.create);
 
     //Retrieve all items
-    router.post("/", items.findAll);
+    router.get("/", items.findAll);
 
     //Retrieve a single item with id
     router.get("/:id", items.findOne);
@@ -25,4 +25,6 @@ module.exports = (app) => {
     
     //delete all items
     router.delete("/", items.deleteAll);
+
+    app.use("/asset-t4/item", router);
 };

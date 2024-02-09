@@ -12,8 +12,20 @@ module.exports = (sequelize, Sequelize) => {
       endDate: {
         type: Sequelize.DATE,
         allowNull: true,
-      }
-    });
+      },      
+      expectedEndDate: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+      status: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      type: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+   });
   
     return Assignment;
   };

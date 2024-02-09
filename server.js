@@ -7,7 +7,9 @@ const app = express();
 
 const db = require("./app/models");
 
-db.sequelize.sync();
+// ! CHANGE BEFORE FINAL SYSTEM
+// db.sequelize.sync();
+db.sequelize.sync({ alter: true });
 
 var corsOptions = {
   origin: "http://localhost:8081",

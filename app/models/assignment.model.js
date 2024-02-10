@@ -1,7 +1,7 @@
 module.exports = (sequelize, Sequelize) => {
     const Assignment = sequelize.define("assignment", {
       id: {
-        type: sequelize.INTEGER,
+        type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
@@ -15,7 +15,7 @@ module.exports = (sequelize, Sequelize) => {
       },      
       expectedEndDate: {
         type: Sequelize.DATE,
-        allowNull: false,
+        allowNull: true,
       },
       status: {
         type: Sequelize.STRING,

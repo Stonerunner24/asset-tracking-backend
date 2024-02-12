@@ -1,23 +1,23 @@
 const db = require("../models");
 const Assignment = db.assignment;
-const Op = db.Sequelize.Op;
-// Create and Save a new Lesson
+
 exports.create = (req, res) => {
-  // Validate request
-  if (!req.body.title) {
+  if (!req.body.startDate || !req.body.status || !req.body.type) {
     res.status(400).send({
-      message: "Content can not be empty!",
+      message: "Start date, status, and type cannot be empty!",
     });
     return;
   }
 
-  // Create a Assignment
   const assignment = {
-    startDate: req.params.startDate,
+    startDate: req.body.startDate,
     endDate: req.body.endDate,
+    expectedEndDate: req.body.expectedEndDate,
+    status: req.body.status,
+    type: req.body.type
   };
-  // Save Lesson in the database
-  Assignment.create(lesson)
+
+  Assignment.create(assignment)
     .then((data) => {
       res.send(data);
     })
@@ -28,119 +28,96 @@ exports.create = (req, res) => {
       });
     });
 };
-// Retrieve all Lessons from the database.
-exports.findAll = (req, res) => {
-  const assignmentId = req.query.assignmentId;
-  var condition = assignmentId
-    ? {
-        assignmentId: {
-          [Op.like]: `%${assignmentId}%`,
-        },
-      }
-    : null;
 
-  Assignment.findAll({ where: condition })
+exports.findAll = (req, res) => {
+  Assignment.findAll()
     .then((data) => {
       res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Some error occurred while retrieving Assignments.",
+        message: err.message || "Some error occurred while retrieving assignments.",
       });
     });
 };
-// Find a single Lesson with an id
+
 exports.findOne = (req, res) => {
   const id = req.params.id;
-  Lesson.findByPk(id)
+  Assignment.findByPk(id)
     .then((data) => {
       if (data) {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find Lesson with id=${id}.`,
+          message: `Cannot find Assignment with id=${id}.`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error retrieving Lesson with id=" + id,
+        message: "Error retrieving Assignment with id=" + id,
       });
     });
 };
-// Update a Lesson by the id in the request
+
 exports.update = (req, res) => {
   const id = req.params.id;
-  Lesson.update(req.body, {
+  Assignment.update(req.body, {
     where: { id: id },
   })
     .then((num) => {
       if (num == 1) {
         res.send({
-          message: "Lesson was updated successfully.",
+          message: "Assignment was updated successfully.",
         });
       } else {
         res.send({
-          message: `Cannot update Lesson with id=${id}. Maybe Lesson was not found or req.body is empty!`,
+          message: `Cannot update Assignment with id=${id}. Maybe Assignment was not found or req.body is empty!`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error updating Lesson with id=" + id,
+        message: "Error updating Assignment with id=" + id,
       });
     });
 };
-// Delete a Lesson with the specified id in the request
+
 exports.delete = (req, res) => {
   const id = req.params.id;
-  Lesson.destroy({
+  Assignment.destroy({
     where: { id: id },
   })
     .then((num) => {
       if (num == 1) {
         res.send({
-          message: "Lesson was deleted successfully!",
+          message: "Assignment was deleted successfully!",
         });
       } else {
         res.send({
-          message: `Cannot delete Lesson with id=${id}. Maybe Lesson was not found!`,
+          message: `Cannot delete Assignment with id=${id}. Maybe Assignment was not found!`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Could not delete Lesson with id=" + id,
+        message: "Could not delete Assignment with id=" + id,
       });
     });
 };
-// Delete all Lessons from the database.
+
 exports.deleteAll = (req, res) => {
-  Lesson.destroy({
+  Assignment.destroy({
     where: {},
     truncate: false,
   })
     .then((nums) => {
-      res.send({ message: `${nums} Lessons were deleted successfully!` });
+      res.send({ message: `${nums} Assignments were deleted successfully!` });
     })
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all lessons.",
-      });
-    });
-};
-// Find all published Lessons
-exports.findAllPublished = (req, res) => {
-  const lessonId = req.query.lessonId;
-
-  Lesson.findAll({ where: { published: true } })
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Some error occurred while retrieving lessons.",
+          err.message || "Some error occurred while removing all assignments.",
       });
     });
 };

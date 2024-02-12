@@ -21,12 +21,11 @@ db.permission = require("./permission.model.js")(sequelize, Sequelize);
 db.person = require("./person.model.js")(sequelize, Sequelize);
 db.renovation = require("./renovation.model.js")(sequelize, Sequelize);
 db.repair = require("./repair.model.js")(sequelize, Sequelize);
-db.role = require("./room.model.js")(sequelize, Sequelize);
+db.role = require("./role.model.js")(sequelize, Sequelize);
 db.room = require("./room.model.js")(sequelize, Sequelize);
 db.session = require("./session.model.js")(sequelize, Sequelize);
 db.user = require("./user.model.js")(sequelize, Sequelize);
 db.vendor = require("./vendor.model.js")(sequelize, Sequelize);
-//below is daniels stuff
 db.assignment = require("./assignment.model.js")(sequelize, Sequelize);
 db.brand = require("./brand.model.js")(sequelize, Sequelize);
 db.category = require("./category.model.js")(sequelize, Sequelize);
@@ -38,34 +37,27 @@ db.modelField = require("./modelField.model.js")(sequelize, Sequelize);
 db.type = require("./type.model.js")(sequelize, Sequelize);
 db.typeField = require("./typeField.model.js")(sequelize, Sequelize);
 
-
 // foreign key for session
 db.user.hasMany(
   db.session,
-  { as: "session" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+  { foreignKey: "userId" }
 );
 db.session.belongsTo(
   db.user,
-  { as: "user" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+  { foreignKey: "userId" }
 );
 
 //foreign key for room
 db.building.hasMany(
   db.room, 
-  { as: "room" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+  { foreignKey: "buildingId" }
 );
 
 db.room.belongsTo(
   db.building,
-  {foreignKey: {allowNull: false}, onDelete: "CASCADE" }
+  {foreignKey: "buildingId" }
 );
   
-
-
-
 
 //foreign key for renovations
 db.building.hasMany(
@@ -75,7 +67,6 @@ db.building.hasMany(
 
 db.renovation.belongsTo(
   db.building,
-  
   { foreignKey: "buildingId"}
 );
 
@@ -135,7 +126,8 @@ db.repair.belongsTo(
 
 //foreign key for permission
 db.role.hasMany(
-  db.permission, { foreignKey: "roleId" }
+  db.permission, 
+  { foreignKey: "roleId"}
 );
 
 db.permission.belongsTo(
@@ -155,7 +147,15 @@ db.user.belongsTo(
   { foreignKey: "roleId" }
 );
 
-// ================================================================
+db.person.hasOne(
+  db.user,
+  { foreignKey: "personId" }
+)
+db.user.belongsTo(
+  db.person,
+  { foreignKey: "personId" },
+)
+
 
 // foreign key for type
 db.category.hasMany(

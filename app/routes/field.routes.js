@@ -1,5 +1,5 @@
 module.exports = (app) => {
-    const fields = require("../controllers/field.controller.js"); // Adjust the path if needed
+    const fields = require("../controllers/field.controller.js"); 
     const { authenticate } = require("../authorization/authorization.js");
     var router = require("express").Router();
 
@@ -21,5 +21,5 @@ module.exports = (app) => {
     // Delete all fields
     router.delete("/", fields.deleteAll);
 
-    app.use("/asset-t4/field", router); // Adjust the path prefix accordingly
+    app.use("/asset-t4/field", router); 
 };

@@ -1,26 +1,26 @@
 module.exports = (app) => {
-    const assignments = require("../controllers/assignment.controller.js"); // Update the controller import
+    const assignments = require("../controllers/assigment.controller.js");
     const { authenticate } = require("../authorization/authorization.js");
     var router = require("express").Router();
   
     // Create a new Assignment
-    router.post("/assignments", [authenticate], assignments.create);
+    router.post("/",  assignments.create);
   
     // Retrieve all Assignments
-    router.get("/assignments", [authenticate], assignments.findAll);
+    router.get("/",  assignments.findAll);
   
     // Retrieve a single Assignment by id
-    router.get("/assignments/:id", [authenticate], assignments.findOne);
+    router.get("/:id",  assignments.findOne);
   
     // Update an Assignment by id
-    router.put("/assignments/:id", [authenticate], assignments.update);
+    router.put("/:id",  assignments.update);
   
     // Delete an Assignment by id
-    router.delete("/assignments/:id", [authenticate], assignments.delete);
+    router.delete("/:id",  assignments.delete);
   
     // Delete all Assignments
-    router.delete("/assignments", [authenticate], assignments.deleteAll);
+    router.delete("/",  assignments.deleteAll);
   
-    app.use("/api", router); // You can adjust the base URL here if needed
+    app.use("/asset-t4/assignment", router); 
   };
   

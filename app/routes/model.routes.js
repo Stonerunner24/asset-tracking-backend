@@ -21,6 +21,6 @@ module.exports = (app) => {
     router.delete("/", models.deleteAll);
   
     // Attach the router to the base path
-    app.use("/models", router);
+    app.use("/asset-t4/models", router);
   };
   

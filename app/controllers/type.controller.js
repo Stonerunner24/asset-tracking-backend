@@ -14,6 +14,7 @@ exports.create = (req, res) => {
     const type = {
         typeName: req.body.typeName,
         active: req.body.active,
+        categoryId: req.body.categoryId
     };
 
     Type.create(type)

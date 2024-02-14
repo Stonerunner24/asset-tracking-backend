@@ -16,6 +16,9 @@ exports.create = (req, res) => {
         date: new Date(req.body.date),
         problems: req.body.problems || null,
         condition: req.body.condition,
+        itemId: req.body.itemId,
+        ocEmployee: req.body.ocEmployee,
+        vendorId: req.body.vendorId || null
     };
 
     Repair.create(repair)

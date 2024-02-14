@@ -4,7 +4,7 @@ const Op = db.Sequelize.Op;
 
 // Create and Save a new Room
 exports.create = (req, res) => {
-    if (!req.body.roomNum) {
+    if (!req.body.roomNum || !req.body.buildingId) {
         res.status(400).send({
             message: "Content cannot be empty",
         });
@@ -13,6 +13,7 @@ exports.create = (req, res) => {
 
     const room = {
         roomNum: req.body.roomNum,
+        buildingId: req.body.buildingId
     };
 
     Room.create(room)

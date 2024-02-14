@@ -4,10 +4,17 @@ const Op = db.Sequelize.Op;
 
 // Create and Save a new Permission
 exports.create = (req, res) => {
-  // Validate request - No validation needed for a simple ID-based model
+  // Validate request
+  if (!req.body.roleId) {
+    res.status(400).send({
+      message: "RoleId cannot be empty!",
+    });
+    return;
+  }
+
   // Create a Permission
   const permission = {
-    // No attributes to set explicitly for a simple ID-based model
+    roleId: req.body.roleId,
   };
 
   // Save Permission in the database
@@ -62,8 +69,25 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   const id = req.params.id;
 
-  // No need to update for a simple ID-based model
-  res.status(501).send({ message: "Not implemented" });
+  Permission.update(req.body, {
+    where: { id: id },
+  })
+    .then((num) => {
+      if (num == 1) {
+        res.send({
+          message: "Permission was updated successfully.",
+        });
+      } else {
+        res.send({
+          message: `Cannot update Permission with id=${id}. Maybe Permission was not found or req.body is empty!`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error updating Permission with id=" + id,
+      });
+    });
 };
 
 // Delete a Permission with the specified id in the request

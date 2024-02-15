@@ -5,9 +5,9 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Renovation
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.date || !req.body.description) {
+  if (!req.body.date || !req.body.description || !req.body.buildingId) {
     res.status(400).send({
-      message: "Date and Description cannot be empty!",
+      message: "Date, Description, and buildingId cannot be empty!",
     });
     return;
   }
@@ -17,6 +17,7 @@ exports.create = (req, res) => {
     date: req.body.date,
     cost: req.body.cost,
     description: req.body.description,
+    buildingId: req.body.buildingId
   };
 
   // Save Renovation in the database

@@ -5,9 +5,9 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Model
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.model) {
+  if (!req.body.model || !req.body.typeId) {
     res.status(400).send({
-      message: "Model name cannot be empty!",
+      message: "Model and typeId cannot be empty!",
     });
     return;
   }
@@ -15,7 +15,8 @@ exports.create = (req, res) => {
   // Create a Model
   const model = {
     model: req.body.model,
-    weightInPounds: req.body.weightInPounds,
+    typeId: req.body.typeId,
+    brandId: req.body.brandId
   };
 
   // Save Model in the database

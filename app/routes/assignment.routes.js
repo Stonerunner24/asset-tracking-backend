@@ -1,5 +1,5 @@
 module.exports = (app) => {
-  const models = require("../controllers/model.controller.js");
+  const models = require("../controllers/assignment.controller.js");
   const router = require("express").Router();
 
   // Create a new Model
@@ -21,5 +21,5 @@ module.exports = (app) => {
   router.delete("/", models.deleteAll);
 
   // Attach the router to the base path
-  app.use("/asset-t4/model", router);
+  app.use("/asset-t4/assignment", router);
 };

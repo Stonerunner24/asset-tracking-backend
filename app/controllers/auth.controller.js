@@ -1,6 +1,7 @@
 const db = require("../models");
 const authconfig = require("../config/auth.config");
 const User = db.user;
+const Person = db.person;
 const Session = db.session;
 const Op = db.Sequelize.Op;
 
@@ -59,26 +60,34 @@ exports.login = async (req, res) => {
   let user = {};
   let session = {};
 
-  await User.findOne({
+  await Person.findOne({
     where: {
       email: email,
     },
+    include: [
+      {
+        model: User,
+      },
+    ],
   })
-    .then((data) => {
-      if (data != null) {
-        user = data.dataValues;
-      } else {
-        // create a new User and save to database
+    .then(async (data) => {
+      console.log("Inside .then: \n" + data.person);
+      if (data != null && data.user.length > 0) {
+        // User with the given email exists, retrieve user details
+        console.log("PERSON AND USER FOUND: \n" + data);
+        const userData = data.Users[0];
         user = {
-          fName: firstName,
-          lName: lastName,
+          id: userData.id,
+          fName: data.firstName,
+          lName: data.lastName,
           email: email,
         };
-      }
+      } //WE CAN ADD A FUNCTION TO ADD A USER TO THE DB HERE IF WE WANT ANYONE TO BE ABLE TO ACCESS THE SYSTEM, BUT I DON'T THINK WE WANT THAT - Eli
     })
     .catch((err) => {
       res.status(500).send({ message: err.message });
     });
+
 
   // this lets us get the user id
   if (user.id === undefined) {

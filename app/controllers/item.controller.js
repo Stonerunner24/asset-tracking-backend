@@ -1,5 +1,15 @@
 const db = require("../models");
 const Item = db.item;
+const Model = db.model;
+const Type = db.type;
+const Category = db.category;
+const ModelField = db.modelField;
+const TypeField = db.typeField;
+const Field = db.field;
+const Repair = db.repair;
+const Vendor = db.vendor;
+const Person = db.person;
+const ItemInfo = db.itemInformation;
 const Op = db.Sequelize.Op;
 
 //Create and Save a new Item
@@ -34,7 +44,13 @@ exports.findAll = (req, res) => {
     const id = req.query.id;
     var condition = id ? {id: {[Op.like]: `%${id}%`} } : null;
 
-    Item.findAll({where: condition})
+    Item.findAll({
+      where: condition,
+      include: [{
+        model: Model, 
+        include: [Type]
+      }]
+    })
         .then((data) => {
             res.send(data);
         })
@@ -49,7 +65,35 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     const id = req.params.id;
   
-    Item.findByPk(id)
+    Item.findByPk(id, {
+      include: [{
+        model: Model,
+        include: [{
+          model: Type,
+          include: [{
+            model: TypeField,
+            include: [Field]
+          }],
+          include: [Category],
+          // include: [{
+          //   model: ModelField,
+          //   include: [Field],
+          // }]
+        }],
+        // include: [{
+        //   model: ModelField,
+        //   include: [Field],
+        // }],
+        // include: [{
+        //   model: Repair,
+        //   include: [Vendor],
+        //   include: [Person]
+        // }],
+        // include: [{
+        //   model: ItemInfo
+        // }]
+      }]
+    })
       .then((data) => {
         if (data) {
           res.send(data);

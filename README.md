@@ -1,6 +1,6 @@
-# Tutorial Backend with Node
+# Oklahoma Christian University Asset Tracking Backend with Node
 
-This application allows users to create and maintain a list of tutorials that can have multiple lessons within. Please visit https://github.com/OC-ComputerScience/tutorial-frontend-vue2 for the Vue 2 frontend repository or https://github.com/OC-ComputerScience/tutorial-frontend-vue3 for the Vue 3 frontend repository.
+This application allows users to create and maintain a list of tutorials that can have multiple lessons within. Please visit https://github.com/Stonerunner24/asset-tracking-frontend Vue 3 frontend repository.
  
 #### Please note:
 - You will need to create a database and be able to run it locally.
@@ -10,7 +10,7 @@ This application allows users to create and maintain a list of tutorials that ca
 ## Project Setup
 1. Clone the project into your **XAMPP/xamppfiles/htdocs** directory.
 ```
-git clone https://github.com/OC-ComputerScience/tutorial-backend.git
+git clone https://github.com/Stonerunner24/asset-tracking-backend.git
 ```
 
 2. Install the project.

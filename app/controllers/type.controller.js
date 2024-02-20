@@ -2,6 +2,8 @@ const db = require("../models");
 const Type = db.type; 
 const Op = db.Sequelize.Op;
 
+// Add functions to create TypeFields? or maybe do that in its own controller? 
+
 // Create and Save a new Type
 exports.create = (req, res) => {
     if (!req.body.typeName || req.body.active === undefined) {

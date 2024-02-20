@@ -1,6 +1,6 @@
 # Oklahoma Christian University Asset Tracking Backend with Node
 
-This application allows users to create and maintain a list of tutorials that can have multiple lessons within. Please visit https://github.com/Stonerunner24/asset-tracking-frontend Vue 3 frontend repository.
+This application allows users to keep track of items and other assets at Oklahoma Christian University. Items can be checked out to people, buildings, or rooms within those buildings. Please visit https://github.com/Stonerunner24/asset-tracking-frontend Vue 3 frontend repository.
  
 #### Please note:
 - You will need to create a database and be able to run it locally.

@@ -277,7 +277,7 @@ db.building.hasMany(
   { foreignKey: 'buildingId' },
 )
 db.assignment.belongsTo(
-  db.assignment,
+  db.building,
   { foreignKey: 'buildingId' },
 )
 

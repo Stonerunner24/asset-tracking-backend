@@ -5,11 +5,10 @@ const Type = db.type;
 const Category = db.category;
 const ModelField = db.modelField;
 const TypeField = db.typeField;
-const Field = db.field;
+const ItemField = db.itemField;
 const Repair = db.repair;
-const Vendor = db.vendor;
-const Person = db.person;
 const ItemInfo = db.itemInformation;
+const Assignment = db.assignment;
 const Op = db.Sequelize.Op;
 
 //Create and Save a new Item
@@ -62,52 +61,106 @@ exports.findAll = (req, res) => {
 };
 
 // Find a single Item with an id
-exports.findOne = (req, res) => {
-    const id = req.params.id;
-  
-    Item.findByPk(id, {
+exports.findOne = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const data = await Item.findByPk(id, {
       include: [{
         model: Model,
         include: [{
           model: Type,
-          include: [{
-            model: TypeField,
-            include: [Field]
-          }],
           include: [Category],
-          // include: [{
-          //   model: ModelField,
-          //   include: [Field],
-          // }]
         }],
-        // include: [{
-        //   model: ModelField,
-        //   include: [Field],
-        // }],
-        // include: [{
-        //   model: Repair,
-        //   include: [Vendor],
-        //   include: [Person]
-        // }],
-        // include: [{
-        //   model: ItemInfo
-        // }]
       }]
-    })
-      .then((data) => {
-        if (data) {
-          res.send(data);
-        } else {
-          res.status(404).send({
-            message: `Cannot find Item with id=${id}.`,
-          });
-        }
-      })
-      .catch((err) => {
-        res.status(500).send({
-          message: "Error retrieving Item with id=" + id,
-        });
+    });
+
+    if (data) {
+      console.log(data.id);
+
+      const modelFields = await ModelField.findAll({
+        where: { modelId: data.model.id },
+        include: [db.field],
       });
+      console.log("Found model fields. Entering type fields");
+      const typeFields = await TypeField.findAll({
+        where: { typeId: data.model.typeId },
+        include: [db.field],
+      });
+
+      const itemFields = await ItemField.findAll({
+        where: { itemId: data.id },
+        include: [db.field],
+      });
+
+      const repair = await Repair.findAll({
+        where: { itemId: data.id },
+        include: [db.vendor, db.person],
+      });
+
+      const assignment = await Assignment.findAll({
+        where: { itemId: data.id },
+        include: [db.person, db.building, db.room],
+      });
+
+      const itemInfo = await ItemInfo.findAll({
+        where: { itemId: data.id },
+      });
+
+      // Convert Sequelize instances to plain objects
+      const dataObject = data.toJSON();
+      const itemArray = {
+        id: dataObject.id,
+        productionYear: dataObject.productionYear,
+        receivedDate: dataObject.receivedDate,
+        status: dataObject.status,
+        warrantyEnd: dataObject.warrantyEnd,
+        serialNum: dataObject.serialNum,
+      };
+      const modelArray = {
+        model: dataObject.model.model,
+        weight: dataObject.model.weightInPounds,
+      };
+      const typeArray = {
+        typeName: dataObject.model.type.typeName,
+      };
+      const categoryArray = {
+        catName: dataObject.model.type.category.catName,
+      };
+      const modelFieldsArray = modelFields.map((field) => field.toJSON());
+      const typeFieldsArray = typeFields.map((field) => field.toJSON());
+      const itemFieldsArray = itemFields.map((field) => field.toJSON());
+      const repairArray = repair.map((r) => r.toJSON());
+      const assignmentArray = assignment.map((a) => a.toJSON());
+      const itemInfoArray = itemInfo.map((info) => info.toJSON());
+
+      // Merge all relevant data into a single object
+      const mergedData = {
+        item: itemArray,
+        model: modelArray,
+        type: typeArray,
+        category: categoryArray,
+        modelFields: modelFieldsArray,
+        typeFields: typeFieldsArray,
+        itemFields: itemFieldsArray,
+        repair: repairArray,
+        assignment: assignmentArray,
+        itemInfo: itemInfoArray,
+      };
+
+      console.log(mergedData);
+      res.send(mergedData);
+    } else {
+      res.status(404).send({
+        message: `Cannot find Item with id=${id}.`,
+      });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({
+      message: "Error retrieving Item with id=" + id,
+    });
+  }
 };
 
 // Update an Item by the id in the request

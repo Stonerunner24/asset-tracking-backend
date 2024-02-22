@@ -28,6 +28,7 @@ exports.create = (req, res) => {
         });
 };
 
+// find all types
 exports.findAll = (req, res) => {
     const id = req.query.id;
     var condition = id ? { id: { [Op.like]: `%${id}%` } } : null;
@@ -42,6 +43,28 @@ exports.findAll = (req, res) => {
             });
         });
 };
+
+// find all types for a category ID
+exports.findAllByCategoryId = (req, res) => {
+    const categoryId = req.params.categoryId;
+
+    Type.findAll({ where: { categoryId: categoryId } })
+        .then((data) => {
+            if (data.length > 0) {
+                res.send(data);
+            } else {
+                res.status(404).send({
+                    message: `Cannot find Types with categoryId=${categoryId}.`,
+                });
+            }
+        })
+        .catch((err) => {
+            res.status(500).send({
+                message: "Error retrieving Types with categoryId=" + categoryId,
+            });
+        });
+};
+
 
 // Find a single Type with an id
 exports.findOne = (req, res) => {

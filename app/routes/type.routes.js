@@ -1,5 +1,6 @@
 module.exports = (app) => {
     const type = require("../controllers/type.controller.js"); 
+    const typeField = require("../controllers/typeField.controller.js");
     const { authenticate } = require("../authorization/authorization.js");
     var router = require("express").Router();
 
@@ -20,6 +21,16 @@ module.exports = (app) => {
 
     // Delete all types
     router.delete("/", type.deleteAll);
+
+    // Add routes to CRUD typefields
+    // Create many typeFields for a type with id
+    router.post("/:id/typefield/", typeField.bulkCreate);
+
+    // Retrieve all typeFields for a type with id
+    router.get("/:id/typefield/", typeField.findAllforType);
+
+    // Delete one typeField from a type with ids
+    router.delete("/:typeId/typefield/:typeFieldId", typeField.deleteForType);
 
     app.use("/asset-t4/type", router); 
 };

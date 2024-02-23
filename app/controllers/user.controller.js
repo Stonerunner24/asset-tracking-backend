@@ -1,5 +1,6 @@
 const db = require("../models");
 const User = db.user;
+const Person = db.person;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new User
@@ -33,7 +34,13 @@ exports.create = (req, res) => {
 
 // Retrieve all Users from the database.
 exports.findAll = (req, res) => {
-  User.findAll()
+  User.findAll({
+    include: [
+      {
+        model: Person,
+      },
+    ],
+  })
     .then((data) => {
       res.send(data);
     })
@@ -49,7 +56,13 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  User.findByPk(id)
+  User.findByPk(id, {
+    include: [
+      {
+        model: Person,
+      },
+    ],
+  })
     .then((data) => {
       if (data) {
         res.send(data);
@@ -64,6 +77,25 @@ exports.findOne = (req, res) => {
         message: "Error retrieving User with id=" + id,
       });
     });
+};
+
+exports.findOneByEmail = async (req, res) => {
+  const email = req.params.id;
+
+  try {
+    const person = await Person.findOne({where: {email: email}});
+    const user = await User.findOne({
+      where: {personId: person.campusId},
+      include: [{model: Person}]
+    });
+    res.send(user);
+  }
+  catch(err){
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while finding this person"
+    });
+  }
 };
 
 // Update a User by the id in the request

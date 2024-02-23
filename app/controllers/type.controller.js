@@ -44,7 +44,7 @@ exports.findAll = (req, res) => {
         });
 };
 
-// find all types for a category ID
+// Find all items in the database with a specific categoryId
 exports.findAllByCategoryId = (req, res) => {
     const categoryId = req.params.categoryId;
 
@@ -54,16 +54,17 @@ exports.findAllByCategoryId = (req, res) => {
                 res.send(data);
             } else {
                 res.status(404).send({
-                    message: `Cannot find Types with categoryId=${categoryId}.`,
+                    message: `Cannot find items with categoryId=${categoryId}.`,
                 });
             }
         })
         .catch((err) => {
             res.status(500).send({
-                message: "Error retrieving Types with categoryId=" + categoryId,
+                message: "Error retrieving items with categoryId=" + categoryId,
             });
         });
 };
+
 
 
 // Find a single Type with an id

@@ -147,15 +147,6 @@ db.user.belongsTo(
   { foreignKey: "roleId" }
 );
 
-db.person.hasOne(
-  db.user,
-  { foreignKey: "personId" }
-)
-db.user.belongsTo(
-  db.person,
-  { foreignKey: "personId" },
-)
-
 
 // foreign key for type
 db.category.hasMany(

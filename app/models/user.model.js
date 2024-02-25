@@ -5,6 +5,10 @@ module.exports = (sequelize, Sequelize) => {
       autoIncrement: true,
       primaryKey: true,
     },
+    email: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
     //do the person foreign key in index later
  
     // refresh_token: {

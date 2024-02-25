@@ -44,6 +44,26 @@ exports.findAll = (req, res) => {
     });
 };
 
+exports.findAllByTypeId = (req, res) => {
+  const typeId = req.params.typeId;
+
+  Model.findAll({ where: { typeId: typeId } })
+      .then((data) => {
+          if (data.length > 0) {
+              res.send(data);
+          } else {
+              res.status(404).send({
+                  message: `Cannot find items with typeId=${typeId}.`,
+              });
+          }
+      })
+      .catch((err) => {
+          res.status(500).send({
+              message: "Error retrieving items with typeId=" + typeId,
+          });
+      });
+};
+
 // Find a single Model with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;

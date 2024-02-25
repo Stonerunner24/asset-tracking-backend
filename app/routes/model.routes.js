@@ -10,6 +10,9 @@ module.exports = (app) => {
   
     // Retrieve a single Model by id
     router.get("/:id", models.findOne);
+
+    //retrieve all models by type id
+    router.get("/type/:typeId", models.findAllByTypeId);
   
     // Update a Model by id
     router.put("/:id", models.update);

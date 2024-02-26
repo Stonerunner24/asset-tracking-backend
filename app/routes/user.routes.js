@@ -1,25 +1,25 @@
 module.exports = (app) => {
-  const user = require("../controllers/user.controller.js");
-  const { authenticate } = require("../authorization/authorization.js");
+  const users = require("../controllers/user.controller.js");
   var router = require("express").Router();
 
   // Create a new User
-  router.post("/", [authenticate], user.create);
+  router.post("/", users.create);
 
-  // Retrieve all People
-  router.get("/", [authenticate], user.findAll);
+  // Retrieve all Users
+  router.get("/", users.findAll);
 
-  // Retrieve a single User with id
-  router.get("/:id", [authenticate], user.findOne);
+  // Retrieve a single User by id
+  router.get("/:id", users.findOne);
 
-  // Update a User with id
-  router.put("/:id", [authenticate], user.update);
+  // Update a User by id
+  router.put("/:id", users.update);
 
-  // Delete a User with id
-  router.delete("/:id", [authenticate], user.delete);
+  // Delete a User by id
+  router.delete("/:id", users.delete);
 
-  // Delete all User
-  router.delete("/", [authenticate], user.deleteAll);
+  // Delete all Users
+  router.delete("/", users.deleteAll);
 
-  app.use("/tutorial/user", router);
+  // Attach the router to the base path
+  app.use("/asset-t4/user", router);
 };

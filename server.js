@@ -30,9 +30,22 @@ app.get("/", (req, res) => {
 });
 
 require("./app/routes/auth.routes.js")(app);
+require("./app/routes/item.routes.js")(app);
+require("./app/routes/type.routes.js")(app);
+require("./app/routes/category.routes.js")(app);
+require("./app/routes/building.routes.js")(app);
+require("./app/routes/room.routes.js")(app);
+require("./app/routes/field.routes.js")(app);
+require("./app/routes/repair.routes.js")(app);
 require("./app/routes/user.routes")(app);
-require("./app/routes/tutorial.routes")(app);
-require("./app/routes/lesson.routes")(app);
+//require("./app/routes/tutorial.routes")(app);
+//require("./app/routes/lesson.routes")(app);
+require("./app/routes/assignment.routes.js")(app);
+require("./app/routes/model.routes.js")(app);
+require("./app/routes/role.routes.js")(app);
+require("./app/routes/renovation.routes.js")(app);
+require("./app/routes/permission.routes.js")(app);
+require("./app/routes/person.routes.js")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3034;

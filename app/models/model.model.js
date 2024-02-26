@@ -9,10 +9,6 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      weightInPounds: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-      },
     });
   
     return Model;

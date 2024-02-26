@@ -1,25 +1,22 @@
 const db = require("../models");
 const User = db.user;
+const Person = db.person;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new User
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.fName) {
+  if (!(req.body.roleId || req.body.personId)) {
     res.status(400).send({
-      message: "Content can not be empty!",
+      message: "IDs can not be empty!",
     });
     return;
   }
 
   // Create a User
   const user = {
-    id: req.body.id,
-    fName: req.body.fName,
-    lName: req.body.lName,
-    email: req.body.email,
-    // refresh_token: req.body.refresh_token,
-    // expiration_date: req.body.expiration_date
+    roleId: req.body.roleId,
+    personId: req.body.personId
   };
 
   // Save User in the database
@@ -29,23 +26,28 @@ exports.create = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Some error occurred while creating the User.",
+        message:
+          err.message || "Some error occurred while creating the User.",
       });
     });
 };
 
-// Retrieve all People from the database.
+// Retrieve all Users from the database.
 exports.findAll = (req, res) => {
-  const id = req.query.id;
-  var condition = id ? { id: { [Op.like]: `%${id}%` } } : null;
-
-  User.findAll({ where: condition })
+  User.findAll({
+    include: [
+      {
+        model: Person,
+      },
+    ],
+  })
     .then((data) => {
       res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Some error occurred while retrieving people.",
+        message:
+          err.message || "Some error occurred while retrieving users.",
       });
     });
 };
@@ -54,7 +56,13 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  User.findByPk(id)
+  User.findByPk(id, {
+    include: [
+      {
+        model: Person,
+      },
+    ],
+  })
     .then((data) => {
       if (data) {
         res.send(data);
@@ -71,30 +79,23 @@ exports.findOne = (req, res) => {
     });
 };
 
-// Find a single User with an email
-exports.findByEmail = (req, res) => {
-  const email = req.params.email;
+exports.findOneByEmail = async (req, res) => {
+  const email = req.params.id;
 
-  User.findOne({
-    where: {
-      email: email,
-    },
-  })
-    .then((data) => {
-      if (data) {
-        res.send(data);
-      } else {
-        res.send({ email: "not found" });
-        /*res.status(404).send({
-          message: `Cannot find User with email=${email}.`
-        });*/
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: "Error retrieving User with email=" + email,
-      });
+  try {
+    const person = await Person.findOne({where: {email: email}});
+    const user = await User.findOne({
+      where: {personId: person.campusId},
+      include: [{model: Person}]
     });
+    res.send(user);
+  }
+  catch(err){
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while finding this person"
+    });
+  }
 };
 
 // Update a User by the id in the request
@@ -147,19 +148,19 @@ exports.delete = (req, res) => {
     });
 };
 
-// Delete all People from the database.
+// Delete all Users from the database.
 exports.deleteAll = (req, res) => {
   User.destroy({
     where: {},
     truncate: false,
   })
     .then((nums) => {
-      res.send({ message: `${nums} People were deleted successfully!` });
+      res.send({ message: `${nums} Users were deleted successfully!` });
     })
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all people.",
+          err.message || "Some error occurred while removing all users.",
       });
     });
 };

@@ -2,9 +2,9 @@ const db = require("../models");
 const Assignment = db.assignment;
 
 exports.create = (req, res) => {
-  if (!req.body.startDate || !req.body.status || !req.body.type) {
+  if (!req.body.startDate || !req.body.status || !req.body.itemId || (!req.body.personId && !req.body.buildingId && !req.body.roomId)) {
     res.status(400).send({
-      message: "Start date, status, and type cannot be empty!",
+      message: "Start date, status, itemId, and receiver ID cannot be empty!",
     });
     return;
   }
@@ -14,7 +14,11 @@ exports.create = (req, res) => {
     endDate: req.body.endDate,
     expectedEndDate: req.body.expectedEndDate,
     status: req.body.status,
-    type: req.body.type
+    type: req.body.type, 
+    itemId: req.body.itemId,
+    roomId: req.body.roomId,
+    buildingId: req.body.buildingId,
+    personId: req.body.personId
   };
 
   Assignment.create(assignment)

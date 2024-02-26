@@ -70,8 +70,8 @@ exports.login = async (req, res) => {
       } else {
         // create a new User and save to database
         user = {
-          fname: firstName,
-          lname: lastName,
+          fName: firstName,
+          lName: lastName,
           email: email,
         };
       }

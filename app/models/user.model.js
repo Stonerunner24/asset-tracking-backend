@@ -9,6 +9,24 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       allowNull: false,
     },
+    fname: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    lname: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    //do the person foreign key in index later
+ 
+    // refresh_token: {
+    //   type: Sequelize.STRING(512),
+    //   allowNull: true
+    // },
+    // expiration_date: {
+    //   type: Sequelize.DATE,
+    //   allowNull: true
+    // },
   });
 
   return User;

@@ -20,7 +20,11 @@ module.exports = (sequelize, Sequelize) => {
       condition: {
         type: Sequelize.STRING,
         allowNull: false,
-      }
+      },
+      type: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
     });
     return Repair;
   };

@@ -1,5 +1,10 @@
 module.exports = (sequelize, Sequelize) => {
-    const Session = sequelize.define("itemField", {});
+    const ItemField = sequelize.define("itemField", {
+      value: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+    });
   
-    return Session;
+    return ItemField;
   };

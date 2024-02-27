@@ -1,5 +1,6 @@
 const db = require("../models");
 const Model = db.model;
+const ModelFields = db.modelField;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Model
@@ -44,6 +45,26 @@ exports.findAll = (req, res) => {
     });
 };
 
+exports.findAllByTypeId = (req, res) => {
+  const typeId = req.params.typeId;
+
+  Model.findAll({ where: { typeId: typeId } })
+      .then((data) => {
+          if (data.length > 0) {
+              res.send(data);
+          } else {
+              res.status(404).send({
+                  message: `Cannot find items with typeId=${typeId}.`,
+              });
+          }
+      })
+      .catch((err) => {
+          res.status(500).send({
+              message: "Error retrieving items with typeId=" + typeId,
+          });
+      });
+};
+
 // Find a single Model with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
@@ -63,6 +84,27 @@ exports.findOne = (req, res) => {
         message: "Error retrieving Model with id=" + id,
       });
     });
+};
+
+exports.findAllFields = async(req, res) => {
+  const id = req.params.id;
+  try{
+    const data = await ModelFields.findAll({where: {modelId : id}, include: db.field});
+    if(data){
+      res.send(data);
+    }
+    else{
+      res.status(404).send({
+        message: `Cannot find ModelFields with modelId=${id}.`,
+      });
+    }
+
+  }
+  catch(err){
+    res.status(500).send({
+      message: `cannot find modelFields with modelId=${id}`,
+    })
+  }
 };
 
 // Update a Model by the id in the request

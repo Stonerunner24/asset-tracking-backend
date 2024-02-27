@@ -1,5 +1,6 @@
 const db = require("../models");
 const Type = db.type; 
+const TypeFields = db.typeField;
 const Op = db.Sequelize.Op;
 
 // Add functions to create TypeFields? or maybe do that in its own controller? 
@@ -66,8 +67,6 @@ exports.findAllByCategoryId = (req, res) => {
             });
         });
 };
-
-
 
 // Find a single Type with an id
 exports.findOne = (req, res) => {

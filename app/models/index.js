@@ -37,6 +37,8 @@ db.modelField = require("./modelField.model.js")(sequelize, Sequelize);
 db.type = require("./type.model.js")(sequelize, Sequelize);
 db.typeField = require("./typeField.model.js")(sequelize, Sequelize);
 
+// ~~ Foreign Keys ~~
+
 // foreign key for session
 db.user.hasMany(
   db.session,

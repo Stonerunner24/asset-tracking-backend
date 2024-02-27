@@ -6,7 +6,7 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true,
       },
       productionYear: {
-        type: Sequelize.DATE,
+        type: Sequelize.INTEGER,
         allowNull: true,
       },
       receivedDate: {
@@ -18,7 +18,7 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: false,
       },
       warrantyEnd: {
-        type: Sequelize.DATE,
+        type: Sequelize.INTEGER,
         allowNull: true,
       },
       serialNum: {

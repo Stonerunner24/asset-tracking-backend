@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const Session = sequelize.define("session", {});
+    const Session = sequelize.define("itemField", {});
   
     return Session;
   };

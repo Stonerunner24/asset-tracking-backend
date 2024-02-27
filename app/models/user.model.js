@@ -9,11 +9,11 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    fname: {
+    fName: {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    lname: {
+    lName: {
       type: Sequelize.STRING,
       allowNull: false,
     },

@@ -66,7 +66,7 @@ exports.findAllforType = (req, res) => {
     const typeId = req.params.id;
     console.log("\n FIND ALL QUERY: " + typeId);
 
-    TypeField.findAll({ where: {typeId: typeId} })
+    TypeField.findAll({ where: {typeId: typeId, isItem: true}, include: [db.field] })
         .then((data) => {
             res.send(data);
         })

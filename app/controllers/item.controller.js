@@ -12,7 +12,7 @@ const Assignment = db.assignment;
 const Op = db.Sequelize.Op;
 
 //Create and Save a new Item
-exports.create = (req, res) => {
+exports.create = async(req, res) => {
     if(!req.body.serialNum){
         res.status(400).send({
             message: "content cannot be empty", 
@@ -29,14 +29,14 @@ exports.create = (req, res) => {
     };
 
     Item.create(item)
-        .then((data) => {
-            res.send(data);
-        })
-        .catch((err) => {
-            res.status(500).send({
-                message: err.message || "some error occurred while creating the item.",
-            });
-        });
+      .then((data) => {
+          res.send(data);
+      })
+      .catch((err) => {
+          res.status(500).send({
+              message: err.message || "some error occurred while creating the item.",
+          });
+      });
 };
 
 exports.findAll = (req, res) => {

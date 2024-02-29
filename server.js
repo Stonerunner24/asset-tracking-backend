@@ -46,6 +46,7 @@ require("./app/routes/role.routes.js")(app);
 require("./app/routes/renovation.routes.js")(app);
 require("./app/routes/permission.routes.js")(app);
 require("./app/routes/person.routes.js")(app);
+require("./app/routes/quicklink.routes.js")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3034;

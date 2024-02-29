@@ -1,6 +1,7 @@
 const db = require("../models");
 const QuickLink = db.quickLink;
 const Op = db.Sequelize.Op;
+const User = db.user;
 
 // Create and Save a new QuickLink
 exports.create = (req, res) => {
@@ -129,6 +130,25 @@ exports.deleteAll = (req, res) => {
       res.status(500).send({
         message:
           err.message || "Some error occurred while removing all QuickLinks.",
+      });
+    });
+};
+
+// Retrieve all QuickLinks for a specific userId
+exports.findAllByUserId = (req, res) => {
+  const userId = req.params.userId;
+
+  QuickLink.findAll({
+    where: { userId: userId }, // Filtering by userId
+    include: [{ model: User, attributes: ['id', 'username'] }] // Include User model to get user details if needed
+  })
+    .then((quickLinks) => {
+      res.send(quickLinks);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving QuickLinks.",
       });
     });
 };

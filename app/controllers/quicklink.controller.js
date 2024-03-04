@@ -16,7 +16,8 @@ exports.create = (req, res) => {
   // Create a QuickLink
   const quickLink = {
     name: req.body.name,
-    path: req.body.path
+    path: req.body.path,
+    userId: req.body.userId,
   };
 
   // Save QuickLink in the database

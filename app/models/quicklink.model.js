@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const QuickLink = sequelize.define("quikLink", {
+    const QuickLink = sequelize.define("quickLink", {
         id: {
             type: Sequelize.INTEGER,
             autoIncrement: true, 

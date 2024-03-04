@@ -34,7 +34,12 @@ exports.create = (req, res) => {
 
 // Retrieve all Models from the database.
 exports.findAll = (req, res) => {
-  Model.findAll()
+  Model.findAll({
+    include: [{
+      model: db.type,
+      include: [db.category]
+    }]
+  })
     .then((data) => {
       res.send(data);
     })

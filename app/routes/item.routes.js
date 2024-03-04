@@ -14,6 +14,9 @@ module.exports = (app) => {
     //Retrieve all items
     router.get("/", items.findAll);
 
+    //Retrieve all items with modelId
+    router.get("/model/:modelId", items.findAllForModel);
+
     //Retrieve a single item with id
     router.get("/:id", items.findOne);
 

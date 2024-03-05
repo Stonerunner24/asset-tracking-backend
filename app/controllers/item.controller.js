@@ -1,4 +1,5 @@
 const db = require("../models");
+const itemInformationModel = require("../models/itemInformation.model");
 const Item = db.item;
 const Model = db.model;
 const Type = db.type;
@@ -71,6 +72,24 @@ exports.findAll = (req, res) => {
             });
         });
 };
+
+exports.findAllForModel = async(req, res) => {
+  const modelId = req.params.modelId;
+  try{
+    const data = await Item.findAll({
+      where: [{modelId: modelId}]
+    })
+    if(data){
+      res.send(data);
+    }
+  }
+  catch(err){
+    console.error(err);
+    res.status(500).send({
+      message: "Error retrieving Items of modelId=" + modelId,
+    });
+  }
+}
 
 // Find a single Item with an id
 exports.findOne = async (req, res) => {

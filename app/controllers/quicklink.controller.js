@@ -139,9 +139,8 @@ exports.deleteAll = (req, res) => {
 // Retrieve all QuickLinks for a specific userId
 exports.findAllByUserId = (req, res) => {
   const userId = req.params.userId;
-  console.log('user id: ' + userId)
 
-  Type.findAll({ where: { userId: userId } })
+  QuickLink.findAll({ where: { userId: userId } })
       .then((data) => {
           if (data.length > 0) {
               res.send(data);

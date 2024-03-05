@@ -12,7 +12,8 @@ module.exports = (app) => {
     router.get("/:id", quickLinks.findOne);
 
     // Retrieve all Quicklinks for a userId
-    router.get("/user/:userId", quickLinks.findAllByUserId);
+    router.get("/?userId=:userId", quickLinks.findAllByUserId);
+    // router.get("/", quickLinks.findAllByUserId);
   
     // Update a QuickLink by id
     router.put("/:id", quickLinks.update);

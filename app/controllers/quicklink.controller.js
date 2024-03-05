@@ -19,6 +19,7 @@ exports.create = (req, res) => {
     path: req.body.path,
     userId: req.body.userId,
   };
+  console.log(quickLink)
 
   // Save QuickLink in the database
   QuickLink.create(quickLink)
@@ -138,18 +139,21 @@ exports.deleteAll = (req, res) => {
 // Retrieve all QuickLinks for a specific userId
 exports.findAllByUserId = (req, res) => {
   const userId = req.params.userId;
+  console.log('user id: ' + userId)
 
-  QuickLink.findAll({
-    where: { userId: userId }, // Filtering by userId
-    include: [{ model: User, attributes: ['id', 'username'] }] // Include User model to get user details if needed
-  })
-    .then((quickLinks) => {
-      res.send(quickLinks);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving QuickLinks.",
+  Type.findAll({ where: { userId: userId } })
+      .then((data) => {
+          if (data.length > 0) {
+              res.send(data);
+          } else {
+              res.status(404).send({
+                  message: `Cannot find items with userId=${userId}.`,
+              });
+          }
+      })
+      .catch((err) => {
+          res.status(500).send({
+              message: "Error retrieving items with categoryId=" + userId,
+          });
       });
-    });
 };

@@ -36,6 +36,7 @@ db.model = require("./model.model.js")(sequelize, Sequelize);
 db.modelField = require("./modelField.model.js")(sequelize, Sequelize);
 db.type = require("./type.model.js")(sequelize, Sequelize);
 db.typeField = require("./typeField.model.js")(sequelize, Sequelize);
+db.quickLink = require("./quicklink.model.js")(sequelize, Sequelize);
 
 // ~~ Foreign Keys ~~
 
@@ -281,6 +282,16 @@ db.room.hasMany(
 db.assignment.belongsTo(
   db.room,
   { foreignKey: 'roomId' },
+)
+
+// quicklinks foreign key
+db.user.hasMany(
+  db.quickLink,
+  { foreignKey: 'userId' }
+)
+db.quickLink.belongsTo(
+  db.user,
+  { foreignKey: 'userId' }
 )
 
 module.exports = db;

@@ -32,6 +32,12 @@ module.exports = (app) => {
     // Retrieve all typeFields for a type with id
     router.get("/:id/typefield/", typeField.findAllforType);
 
+    // Retrieve all item typeFields for a type with id
+    router.get("/:id/typefield/item", typeField.findAllItemforType);
+
+    // Retrieve all model typeFields for a type with id
+    router.get("/:id/typefield/model", typeField.findAllModelforType);
+
     // Delete one typeField from a type with ids
     router.delete("/:typeId/typefield/:typeFieldId", typeField.deleteForType);
 

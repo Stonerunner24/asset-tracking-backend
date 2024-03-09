@@ -74,7 +74,12 @@ exports.findAllByTypeId = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Model.findByPk(id)
+  Model.findByPk(id, {
+    include: [{
+      model: db.type,
+      include: [db.category]
+    }]
+  })
     .then((data) => {
       if (data) {
         res.send(data);

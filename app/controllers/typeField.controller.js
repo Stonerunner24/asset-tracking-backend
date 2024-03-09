@@ -66,6 +66,21 @@ exports.findAllforType = (req, res) => {
     const typeId = req.params.id;
     console.log("\n FIND ALL QUERY: " + typeId);
 
+    TypeField.findAll({ where: {typeId: typeId}, include: [db.field] })
+        .then((data) => {
+            res.send(data);
+        })
+        .catch((err) => {
+            res.status(500).send({
+                message: err.message || "Some error occurred while retrieving types",
+            });
+        });
+};
+
+exports.findAllItemforType = (req, res) => {
+    const typeId = req.params.id;
+    console.log("\n FIND ALL QUERY: " + typeId);
+
     TypeField.findAll({ where: {typeId: typeId, isItem: true}, include: [db.field] })
         .then((data) => {
             res.send(data);
@@ -76,6 +91,23 @@ exports.findAllforType = (req, res) => {
             });
         });
 };
+
+exports.findAllModelforType = (req, res) => {
+    const typeId = req.params.id;
+    console.log("\n FIND ALL QUERY: " + typeId);
+
+    TypeField.findAll({ where: {typeId: typeId, isItem: false}, include: [db.field] })
+        .then((data) => {
+            res.send(data);
+        })
+        .catch((err) => {
+            res.status(500).send({
+                message: err.message || "Some error occurred while retrieving types",
+            });
+        });
+};
+
+
 
 // Delete a TypeField with the specified id in the request
 exports.deleteForType = (req, res) => {

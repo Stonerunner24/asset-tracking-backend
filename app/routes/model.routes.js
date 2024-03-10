@@ -1,5 +1,6 @@
 module.exports = (app) => {
     const models = require("../controllers/model.controller.js");
+    const modelFields = require("../controllers/modelField.controller.js");
     const router = require("express").Router();
   
     // Create a new Model
@@ -14,8 +15,11 @@ module.exports = (app) => {
     //retrieve all models by type id
     router.get("/type/:typeId", models.findAllByTypeId);
 
+    // Bulk create modelFields
+    router.post("/:id/field", modelFields.bulkCreate);
+
     //retrieve all modelfields
-    router.get("/fields/:id", models.findAllFields);
+    router.get("/:id/field", models.findAllFields);
   
     // Update a Model by id
     router.put("/:id", models.update);

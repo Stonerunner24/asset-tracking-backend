@@ -74,7 +74,12 @@ exports.findAllByTypeId = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Model.findByPk(id)
+  Model.findByPk(id, {
+    include: [{
+      model: db.type,
+      include: [db.category]
+    }]
+  })
     .then((data) => {
       if (data) {
         res.send(data);
@@ -113,28 +118,46 @@ exports.findAllFields = async(req, res) => {
 };
 
 // Update a Model by the id in the request
-exports.update = (req, res) => {
+exports.update = async(req, res) => {
+  console.log('in update function');
   const id = req.params.id;
-
-  Model.update(req.body, {
-    where: { id: id },
-  })
-    .then((num) => {
-      if (num == 1) {
-        res.send({
-          message: "Model was updated successfully.",
+  const data = req.body;
+  console.log(id);
+  try{
+    const response = await Model.update(data.model, {where: {id: id}});
+    if(data.typeChange){
+      console.log('deleting old modelfields');
+      // await Promise.all(data.modelFields.map(mf => ModelFields.delete(mf.id)))
+      await ModelFields.destroy({where: {modelId : id}});
+      let modelFields = [];
+      for (let mf of data.modelFields){
+        modelFields.push({
+          'value': mf.value,
+          'modelId': id,
+          'fieldId': mf.fieldId
         });
-      } else {
-        res.send({
-          message: `Cannot update Model with id=${id}. Maybe Model was not found or req.body is empty!`,
-        });
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: "Error updating Model with id=" + id,
+      } 
+      await Promise.all(modelFields.map(mf => ModelFields.create(mf)));
+    }
+    else{
+      console.log('in update existing modelfields');
+      await Promise.all(data.modelFields.map(mf => ModelFields.update(mf, {where: {id: mf.id}})));
+    }
+    if(response){
+      res.send({message: "Model was updated successfully"});
+    }
+    else{
+      res.send({
+        message: `Cannot update Model with id=${id}. Maybe Model was not found or req.body is empty!`,
       });
+    }
+  }
+  catch(err){
+    console.log(err);
+    res.status(500).send({
+      message: "Error updating Model with id=" + id,
     });
+  }
 };
 
 // Delete a Model with the specified id in the request

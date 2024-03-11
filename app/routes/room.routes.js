@@ -9,6 +9,9 @@ module.exports = (app) => {
     // Retrieve all rooms
     router.get("/", rooms.findAll);
 
+    // Retrieve all types by building
+    router.get("/building/:buildingId", rooms.findAllByBuildingId);
+
     // Retrieve a single room with id
     router.get("/:id", rooms.findOne);
 

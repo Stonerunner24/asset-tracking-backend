@@ -64,6 +64,27 @@ exports.findOne = (req, res) => {
         });
 };
 
+// Find all rooms in the database with a specific buildingId
+exports.findAllByBuildingId = (req, res) => {
+    const buildingId = req.params.buildingId;
+
+    Room.findAll({ where: { buildingId: buildingId } })
+        .then((data) => {
+            if (data.length > 0) {
+                res.send(data);
+            } else {
+                res.status(404).send({
+                    message: `Cannot find items with buildingId=${buildingId}.`,
+                });
+            }
+        })
+        .catch((err) => {
+            res.status(500).send({
+                message: "Error retrieving items with buildingId=" + buildingId,
+            });
+        });
+};
+
 // Update a Room by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;

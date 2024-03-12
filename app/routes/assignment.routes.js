@@ -1,24 +1,27 @@
 module.exports = (app) => {
-  const models = require("../controllers/assignment.controller.js");
+  const assignments = require("../controllers/assignment.controller.js");
   const router = require("express").Router();
 
-  // Create a new Model
-  router.post("/", models.create);
+  // Create a new assignment
+  router.post("/", assignments.create);
 
-  // Retrieve all Models
-  router.get("/", models.findAll);
+  // Retrieve all assignments
+  router.get("/", assignments.findAll);
 
-  // Retrieve a single Model by id
-  router.get("/:id", models.findOne);
+  // Retrieve all Building Assignments
+  router.get("/building/:buildingId", assignments.findAllForBuilding);
 
-  // Update a Model by id
-  router.put("/:id", models.update);
+  // Retrieve a single assignment by id
+  router.get("/:id", assignments.findOne);
 
-  // Delete a Model by id
-  router.delete("/:id", models.delete);
+  // Update a assignment by id
+  router.put("/:id", assignments.update);
 
-  // Delete all Models
-  router.delete("/", models.deleteAll);
+  // Delete a assignment by id
+  router.delete("/:id", assignments.delete);
+
+  // Delete all assignments
+  router.delete("/", assignments.deleteAll);
 
   // Attach the router to the base path
   app.use("/asset-t4/assignment", router);

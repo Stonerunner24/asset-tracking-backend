@@ -45,6 +45,27 @@ exports.findAll = (req, res) => {
     });
 };
 
+// Find all items in the database with a specific buildingId
+exports.findAllForBuilding = (req, res) => {
+  const buildingId = req.params.buildingId;
+
+  Assignment.findAll({ where: { buildingId: buildingId } })
+      .then((data) => {
+          if (data.length > 0) {
+              res.send(data);
+          } else {
+              res.status(404).send({
+                  message: `Cannot find items with buildingId=${buildingId}.`,
+              });
+          }
+      })
+      .catch((err) => {
+          res.status(500).send({
+              message: "Error retrieving items with buildingId=" + buildingId,
+          });
+      });
+};
+
 exports.findOne = (req, res) => {
   const id = req.params.id;
   Assignment.findByPk(id)

@@ -17,7 +17,6 @@ db.sequelize = sequelize;
 
 db.building = require("./building.model.js")(sequelize, Sequelize);
 db.itemInformation = require("./itemInformation.model.js")(sequelize, Sequelize);
-db.permission = require("./permission.model.js")(sequelize, Sequelize);
 db.person = require("./person.model.js")(sequelize, Sequelize);
 db.renovation = require("./renovation.model.js")(sequelize, Sequelize);
 db.repair = require("./repair.model.js")(sequelize, Sequelize);
@@ -127,19 +126,7 @@ db.repair.belongsTo(
   { foreignKey: "vendorId" } 
 );
 
-//foreign key for permission
-db.role.hasMany(
-  db.permission, 
-  { foreignKey: "roleId"}
-);
-
-db.permission.belongsTo(
-  db.role,
-  { foreignKey: "roleId" }
-);
-
 //foreign key for user
-
 db.role.hasMany(
   db.user, 
   {foreignKey: "roleId"}

@@ -77,7 +77,11 @@ exports.findAllForModel = async(req, res) => {
   const modelId = req.params.modelId;
   try{
     const data = await Item.findAll({
-      where: [{modelId: modelId}]
+      where: [{modelId: modelId}],
+      include: [{
+        model: Model,
+        include: [Type]
+      }]
     })
     if(data){
       res.send(data);

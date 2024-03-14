@@ -36,6 +36,7 @@ db.modelField = require("./modelField.model.js")(sequelize, Sequelize);
 db.type = require("./type.model.js")(sequelize, Sequelize);
 db.typeField = require("./typeField.model.js")(sequelize, Sequelize);
 db.quickLink = require("./quicklink.model.js")(sequelize, Sequelize);
+db.userCategory = require("./userCategory.model.js")(sequelize, Sequelize);
 
 // ~~ Foreign Keys ~~
 
@@ -279,6 +280,25 @@ db.user.hasMany(
 db.quickLink.belongsTo(
   db.user,
   { foreignKey: 'userId' }
+)
+
+// userCategory foreign key
+db.user.hasMany(
+  db.userCategory,
+  { foreignKey: 'userId' }
+)
+db.userCategory.belongsTo(
+  db.user,
+  { foreignKey: 'userId' }
+)
+
+db.category.hasMany(
+  db.userCategory,
+  { foreignKey: 'categoryId' }
+)
+db.userCategory.belongsTo(
+  db.category,
+  { foreignKey: 'categoryId' }
 )
 
 module.exports = db;

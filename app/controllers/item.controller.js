@@ -135,7 +135,14 @@ exports.findOne = async (req, res) => {
 
       const assignment = await Assignment.findAll({
         where: { itemId: data.id },
-        include: [db.person, db.building, db.room],
+        include: [
+          {model: db.person}, 
+          {model: db.building}, 
+          {
+            model: db.room,
+            include: [db.building]
+          }
+        ]
       });
 
       const itemInfo = await ItemInfo.findAll({

@@ -43,6 +43,20 @@ exports.findAll = (req, res) => {
         });
 };
 
+// Retrieve all userCategories for a given userId
+exports.findAllForUser = (req, res) => {
+    const userId = req.query.userId;
+    UserCategory.findAll({ where: { userId: userId } })
+        .then((data) => {
+            res.send(data);
+        })
+        .catch((err) => {
+            res.status(500).send({
+                message: err.message || "Some error occurred while retrieving userCategorys",
+            });
+        });
+}
+
 // Find a single UserCategory with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;

@@ -151,6 +151,10 @@ exports.findOne = async (req, res) => {
         status: dataObject.status,
         warrantyEnd: dataObject.warrantyEnd,
         serialNum: dataObject.serialNum,
+        initialValue: dataObject.initialValue,
+        disposalValue: dataObject.disposalValue,
+        repairSchedule: dataObject.repairSchedule,
+        
       };
       const modelArray = {
         model: dataObject.model.model,

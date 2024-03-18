@@ -33,10 +33,10 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.DECIMAL(7,2),
         allowNull: true,
       },
-      repairDate: {
-        type: Sequelize.DATEONLY,
-        allowNull: true,
-      }
+      repairSchedule: {
+        type: Sequelize.INTEGER,
+        allowNull: true
+      },
     });
   
     return Item;

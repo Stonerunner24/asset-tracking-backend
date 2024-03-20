@@ -80,13 +80,13 @@ exports.findAllByManyCategoryIds = (req, res) => {
                 res.send(data);
             } else {
                 res.status(404).send({
-                    message: `Cannot find items with categoryId=${categoryId}.`,
+                    message: `Cannot find items with categoryId=${categoryIds}.`,
                 });
             }
         })
         .catch((err) => {
             res.status(500).send({
-                message: "Error retrieving items with categoryId=" + categoryId,
+                message: "Error retrieving items with categoryId=" + categoryIds,
             });
         });
 }

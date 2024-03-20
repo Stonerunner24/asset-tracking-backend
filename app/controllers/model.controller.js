@@ -115,13 +115,13 @@ exports.findAllByManyCategoryIds = (req, res) => {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find models with categoryId=${categoryId}.`,
+          message: `Cannot find models with categoryId=${categoryIds}.`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error retrieving models with CategoryId=" + categoryId,
+        message: "Error retrieving models with CategoryId=" + categoryIds,
       });
     });
 };

@@ -19,7 +19,7 @@ module.exports = (app) => {
     router.get("/category/:categoryId", models.findAllByCategoryId);
 
     // Retrieve all models by many category ids
-    router.get("/categories/:categoryIds", models.findAllForCategoryIds);
+    router.get("/categories/:categoryIds", models.findAllByManyCategoryIds);
 
     // Bulk create modelFields
     router.post("/:id/field", modelFields.bulkCreate);

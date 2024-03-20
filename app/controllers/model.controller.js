@@ -98,7 +98,7 @@ exports.findAllByCategoryId = (req, res) => {
     });
 };
 
-exports.findAllForCategoryIds = (req, res) => {
+exports.findAllByManyCategoryIds = (req, res) => {
   const categoryIds = req.params.categoryIds.split(',').map(Number);
 
   // Find all models where associated type's categoryId matches any

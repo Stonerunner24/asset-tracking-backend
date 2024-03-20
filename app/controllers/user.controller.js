@@ -1,6 +1,7 @@
 const db = require("../models");
 const User = db.user;
 const Person = db.person;
+const UserCategory = db.userCategory;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new User
@@ -83,20 +84,40 @@ exports.findOneByEmail = async (req, res) => {
   const email = req.params.id;
 
   try {
-    const person = await Person.findOne({where: {email: email}});
+    const person = await Person.findOne({ where: { email: email } });
     const user = await User.findOne({
-      where: {personId: person.campusId},
-      include: [{model: Person}]
+      where: { personId: person.campusId },
+      include: [{ model: Person }]
     });
     res.send(user);
   }
-  catch(err){
+  catch (err) {
     res.status(500).send({
       message:
         err.message || "Some error occurred while finding this person"
     });
   }
 };
+
+exports.findAllCategoriesForUser = (req, res) => {
+  const userId = req.params.id;
+
+  UserCategory.findAll({
+    where: { userId: userId },
+    include: {
+      model: db.category
+    }
+  })
+}
+
+exports.findAllCategoryIdsForUser = (req, res) => {
+  const userId = req.params.id;
+
+  UserCategory.findAll({
+    attributes: [categoryId],
+    where: { userId: userId }
+  })
+}
 
 // Update a User by the id in the request
 exports.update = (req, res) => {

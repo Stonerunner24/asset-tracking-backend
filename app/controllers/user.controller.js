@@ -108,6 +108,20 @@ exports.findAllCategoriesForUser = (req, res) => {
       model: db.category
     }
   })
+    .then((data) => {
+      if (data) {
+        res.send(data);
+      } else {
+        res.status(404).send({
+          message: `Cannot find categories for User with id=${id}.`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error retrieving User categories with userid=" + id,
+      });
+    });
 }
 
 exports.findAllCategoryIdsForUser = (req, res) => {
@@ -117,6 +131,20 @@ exports.findAllCategoryIdsForUser = (req, res) => {
     attributes: [categoryId],
     where: { userId: userId }
   })
+    .then((data) => {
+      if (data) {
+        res.send(data);
+      } else {
+        res.status(404).send({
+          message: `Cannot find categories for User with id=${id}.`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error retrieving User categories with userid=" + id,
+      });
+    });
 }
 
 // Update a User by the id in the request

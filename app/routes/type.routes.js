@@ -14,7 +14,7 @@ module.exports = (app) => {
     router.get("/category/:categoryId", type.findAllByCategoryId);
 
     // Retrieve all types by many categories
-    router.get("/category/:categoryIds", type.findAllByManyCategoryIds);
+    router.get("/categories/:categoryIds", type.findAllByManyCategoryIds);
 
     // Retrieve a single type with id
     router.get("/:id", type.findOne);

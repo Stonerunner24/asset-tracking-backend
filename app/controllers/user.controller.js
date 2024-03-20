@@ -99,54 +99,6 @@ exports.findOneByEmail = async (req, res) => {
   }
 };
 
-exports.findAllCategoriesForUser = (req, res) => {
-  const userId = req.params.id;
-
-  UserCategory.findAll({
-    where: { userId: userId },
-    include: {
-      model: db.category
-    }
-  })
-    .then((data) => {
-      if (data) {
-        res.send(data);
-      } else {
-        res.status(404).send({
-          message: `Cannot find categories for User with id=${id}.`,
-        });
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: "Error retrieving User categories with userid=" + id,
-      });
-    });
-}
-
-exports.findAllCategoryIdsForUser = (req, res) => {
-  const userId = req.params.id;
-
-  UserCategory.findAll({
-    attributes: [categoryId],
-    where: { userId: userId }
-  })
-    .then((data) => {
-      if (data) {
-        res.send(data);
-      } else {
-        res.status(404).send({
-          message: `Cannot find categories for User with id=${id}.`,
-        });
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: "Error retrieving User categories with userid=" + id,
-      });
-    });
-}
-
 // Update a User by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;

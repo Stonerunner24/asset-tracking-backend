@@ -5,6 +5,7 @@
 
 module.exports = (app) => {
     const items = require("../controllers/item.controller.js");
+    const itemInformations = require("../controllers/itemInfo.controller.js");
     const { authenticate } = require("../authorization/authorization.js");
     var router = require("express").Router();
 
@@ -28,6 +29,26 @@ module.exports = (app) => {
     
     //delete all items
     router.delete("/", items.deleteAll);
+
+    //ITEM INFORMATION ROUTES
+    router.post("/info", itemInformations.create);
+
+    // Retrieve all item informations
+    router.get("/info", itemInformations.findAll);
+
+    // Retrieve a single item information with id
+    router.get("/info/:id", itemInformations.findOne);
+
+    router.get("/info/item/:itemId", itemInformations.findAllForItem);
+
+    // Update an item information with id
+    router.put("/info/:id", itemInformations.update);
+
+    // Delete a single item information with id
+    router.delete("/info/:id", itemInformations.delete);
+
+    // Delete all item informations
+    router.delete("/info", itemInformations.deleteAll);
 
     app.use("/asset-t4/item", router);
 };

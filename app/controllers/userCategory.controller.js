@@ -45,7 +45,7 @@ exports.findAll = (req, res) => {
 
 // Retrieve all userCategories for a given userId
 exports.findAllForUser = (req, res) => {
-    const userId = req.query.userId;
+    const userId = req.params.userId;
     UserCategory.findAll({ where: { userId: userId } })
         .then((data) => {
             res.send(data);

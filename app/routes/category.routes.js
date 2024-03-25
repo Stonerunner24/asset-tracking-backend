@@ -12,6 +12,12 @@ module.exports = (app) => {
     // Retrieve a single category with id
     router.get("/:id", categories.findOne);
 
+    // Retrieve all categories for a given user
+    router.get("/user/:userId", categories.findAllForUser);
+
+    // Retrieve all category ids for a given user
+    router.get("/user/:userId/ids", categories.findAllIdsForUser);
+
     // Update a category with id
     router.put("/:id", categories.update);
 

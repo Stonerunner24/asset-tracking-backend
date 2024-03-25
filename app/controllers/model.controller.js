@@ -54,20 +54,76 @@ exports.findAllByTypeId = (req, res) => {
   const typeId = req.params.typeId;
 
   Model.findAll({ where: { typeId: typeId } })
-      .then((data) => {
-          if (data.length > 0) {
-              res.send(data);
-          } else {
-              res.status(404).send({
-                  message: `Cannot find items with typeId=${typeId}.`,
-              });
-          }
-      })
-      .catch((err) => {
-          res.status(500).send({
-              message: "Error retrieving items with typeId=" + typeId,
-          });
+    .then((data) => {
+      if (data.length > 0) {
+        res.send(data);
+      } else {
+        res.status(404).send({
+          message: `Cannot find items with typeId=${typeId}.`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error retrieving items with typeId=" + typeId,
       });
+    });
+};
+
+exports.findAllByCategoryId = (req, res) => {
+  const categoryId = req.params.categoryId;
+
+  // Find all models where associated type's categoryId matches
+  Model.findAll({
+    include: {
+      model: db.type,
+      where: {
+        categoryId: categoryId
+      }
+    }
+  })
+    .then((data) => {
+      if (data.length > 0) {
+        res.send(data);
+      } else {
+        res.status(404).send({
+          message: `Cannot find models with categoryId=${categoryId}.`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error retrieving models with CategoryId=" + categoryId,
+      });
+    });
+};
+
+exports.findAllByManyCategoryIds = (req, res) => {
+  const categoryIds = req.params.categoryIds.split(',').map(Number);
+
+  // Find all models where associated type's categoryId matches any
+  Model.findAll({
+    include: {
+      model: db.type,
+      where: {
+        categoryId: { [Op.in]: categoryIds }
+      }
+    }
+  })
+    .then((data) => {
+      if (data.length > 0) {
+        res.send(data);
+      } else {
+        res.status(404).send({
+          message: `Cannot find models with categoryId=${categoryIds}.`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error retrieving models with CategoryId=" + categoryIds,
+      });
+    });
 };
 
 // Find a single Model with an id
@@ -96,21 +152,21 @@ exports.findOne = (req, res) => {
     });
 };
 
-exports.findAllFields = async(req, res) => {
+exports.findAllFields = async (req, res) => {
   const id = req.params.id;
-  try{
-    const data = await ModelFields.findAll({where: {modelId : id}, include: db.field});
-    if(data){
+  try {
+    const data = await ModelFields.findAll({ where: { modelId: id }, include: db.field });
+    if (data) {
       res.send(data);
     }
-    else{
+    else {
       res.status(404).send({
         message: `Cannot find ModelFields with modelId=${id}.`,
       });
     }
 
   }
-  catch(err){
+  catch (err) {
     res.status(500).send({
       message: `cannot find modelFields with modelId=${id}`,
     })
@@ -118,41 +174,41 @@ exports.findAllFields = async(req, res) => {
 };
 
 // Update a Model by the id in the request
-exports.update = async(req, res) => {
+exports.update = async (req, res) => {
   console.log('in update function');
   const id = req.params.id;
   const data = req.body;
   console.log(id);
-  try{
-    const response = await Model.update(data.model, {where: {id: id}});
-    if(data.typeChange){
+  try {
+    const response = await Model.update(data.model, { where: { id: id } });
+    if (data.typeChange) {
       console.log('deleting old modelfields');
       // await Promise.all(data.modelFields.map(mf => ModelFields.delete(mf.id)))
-      await ModelFields.destroy({where: {modelId : id}});
+      await ModelFields.destroy({ where: { modelId: id } });
       let modelFields = [];
-      for (let mf of data.modelFields){
+      for (let mf of data.modelFields) {
         modelFields.push({
           'value': mf.value,
           'modelId': id,
           'fieldId': mf.fieldId
         });
-      } 
+      }
       await Promise.all(modelFields.map(mf => ModelFields.create(mf)));
     }
-    else{
+    else {
       console.log('in update existing modelfields');
-      await Promise.all(data.modelFields.map(mf => ModelFields.update(mf, {where: {id: mf.id}})));
+      await Promise.all(data.modelFields.map(mf => ModelFields.update(mf, { where: { id: mf.id } })));
     }
-    if(response){
-      res.send({message: "Model was updated successfully"});
+    if (response) {
+      res.send({ message: "Model was updated successfully" });
     }
-    else{
+    else {
       res.send({
         message: `Cannot update Model with id=${id}. Maybe Model was not found or req.body is empty!`,
       });
     }
   }
-  catch(err){
+  catch (err) {
     console.log(err);
     res.status(500).send({
       message: "Error updating Model with id=" + id,

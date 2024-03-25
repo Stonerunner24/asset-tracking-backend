@@ -7,6 +7,9 @@ module.exports = (app) => {
   
     // Retrieve all userCategories
     router.get("/", userCategories.findAll);
+
+    // Retrieve all userCategories for a given userId
+    router.get("/user/:userId", userCategories.findAllForUser);
   
     // Retrieve a single userCategory by id
     router.get("/:id", userCategories.findOne);

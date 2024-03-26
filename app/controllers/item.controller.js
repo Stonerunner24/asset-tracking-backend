@@ -12,43 +12,35 @@ const Assignment = db.assignment;
 const Op = db.Sequelize.Op;
 
 //Create and Save a new Item
-exports.create = async (req, res) => {
-  if (!req.body.serialNum) {
-    res.status(400).send({
-      message: "content cannot be empty",
-    });
-    return;
-  }
-  console.log('Creating new Item')
-  const item = {
-    serialNum: req.body.serialNum,
-    receivedDate: new Date(),
-    status: 'Unassigned',
-    productionYear: req.body.productionYear || null,
-    warrantyEnd: req.body.warrantyEnd || null,
-    modelId: req.body.modelId
-  };
-
-  console.log(item);
-  try {
-    const data = await Item.create(item);
-    for (const itemField of req.body.itemFields) {
-      let values = {
-        value: itemField.value,
-        itemId: data.id,
-        fieldId: itemField.field.id
-      };
-      console.log('creating Field: \n' + values);
-      await ItemField.create(values);
+exports.create = async(req, res) => {
+    if(!req.body.serialNum){
+        res.status(400).send({
+            message: "content cannot be empty", 
+        });
+        return;
     }
-    res.send(data);
-  }
-  catch (err) {
-    console.log(err.message);
-    res.status(500).send({
-      message: err.message || "some error occurred while creating the item.",
-    });
-  }
+    console.log('Creating new Item')
+    const item = {
+        serialNum: req.body.serialNum,
+        receivedDate: new Date(), 
+        status: 'Unassigned',
+        initialValue: req.body.initialValue,
+        productionYear: req.body.prodYear || null, 
+        warrantyEnd: req.body.warrantyEnd || null,
+        modelId: req.body.modelId
+    };
+
+    console.log(item);
+    try{
+      const data = await Item.create(item);
+      res.send(data);
+    }
+    catch(err){
+      console.log(err.message);
+      res.status(500).send({
+        message: err.message || "some error occurred while creating the item.",
+      });
+    }
 };
 
 exports.findAll = (req, res) => {

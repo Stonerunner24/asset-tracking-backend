@@ -15,6 +15,12 @@ module.exports = (app) => {
     //retrieve all models by type id
     router.get("/type/:typeId", models.findAllByTypeId);
 
+    // Retrieve all models by category id
+    router.get("/category/:categoryId", models.findAllByCategoryId);
+
+    // Retrieve all models by many category ids
+    router.get("/categories/:categoryIds", models.findAllByManyCategoryIds);
+
     // Bulk create modelFields
     router.post("/:id/field", modelFields.bulkCreate);
 

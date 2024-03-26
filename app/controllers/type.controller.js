@@ -1,5 +1,5 @@
 const db = require("../models");
-const Type = db.type; 
+const Type = db.type;
 const TypeFields = db.typeField;
 const Op = db.Sequelize.Op;
 
@@ -67,6 +67,29 @@ exports.findAllByCategoryId = (req, res) => {
             });
         });
 };
+
+exports.findAllByManyCategoryIds = (req, res) => {
+    // Convert string param to number array
+    const categoryIds = req.params.categoryIds.split(',').map(Number);
+
+    Type.findAll({
+        where: { categoryId: { [Op.in]: categoryIds } }
+    })
+        .then((data) => {
+            if (data.length > 0) {
+                res.send(data);
+            } else {
+                res.status(404).send({
+                    message: `Cannot find items with categoryId=${categoryIds}.`,
+                });
+            }
+        })
+        .catch((err) => {
+            res.status(500).send({
+                message: "Error retrieving items with categoryId=" + categoryIds,
+            });
+        });
+}
 
 // Find a single Type with an id
 exports.findOne = (req, res) => {

@@ -1,5 +1,5 @@
 const db = require("../models");
-const Category = db.category; 
+const Category = db.category;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Category
@@ -63,6 +63,50 @@ exports.findOne = (req, res) => {
             });
         });
 };
+
+// Find all categories for a given user
+exports.findAllForUser = (req, res) => {
+    const userId = req.params.userId;
+
+    Category.findAll({
+        include: {
+            model: db.userCategory,
+            attributes: [],
+            where: { userId: userId }
+        }
+    })
+        .then((data) => {
+            res.send(data);
+        })
+        .catch((err) => {
+            res.status(500).send({
+                message: err.message || "Some error occurred while retrieving categories",
+            });
+        });
+}
+
+// Find all categories for a given user
+exports.findAllIdsForUser = (req, res) => {
+    const userId = req.params.userId;
+
+    Category.findAll({
+        include: {
+            model: db.userCategory,
+            attributes: [],
+            where: { userId: userId }
+        }
+    })
+        .then((data) => {
+            // Flatten data to a single array
+            const ids = data.map(category => category.id);
+            res.send({ ids });
+        })
+        .catch((err) => {
+            res.status(500).send({
+                message: err.message || "Some error occurred while retrieving category ids",
+            });
+        });
+}
 
 // Update a Category by the id in the request
 exports.update = (req, res) => {

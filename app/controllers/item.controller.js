@@ -166,7 +166,14 @@ exports.findOne = async (req, res) => {
 
       const assignment = await Assignment.findAll({
         where: { itemId: data.id },
-        include: [db.person, db.building, db.room],
+        include: [
+          {model: db.person}, 
+          {model: db.building}, 
+          {
+            model: db.room,
+            include: [db.building]
+          }
+        ]
       });
 
       const itemInfo = await ItemInfo.findAll({
@@ -182,6 +189,10 @@ exports.findOne = async (req, res) => {
         status: dataObject.status,
         warrantyEnd: dataObject.warrantyEnd,
         serialNum: dataObject.serialNum,
+        initialValue: dataObject.initialValue,
+        disposalValue: dataObject.disposalValue,
+        repairSchedule: dataObject.repairSchedule,
+        
       };
       const modelArray = {
         model: dataObject.model.model,
@@ -229,29 +240,26 @@ exports.findOne = async (req, res) => {
   }
 };
 
-// Update an Item by the id in the request
-exports.update = (req, res) => {
-  const id = req.params.id;
-
-  Item.update(req.body, {
-    where: { id: id },
-  })
-    .then((num) => {
-      if (num == 1) {
-        res.send({
-          message: "Item was updated successfully.",
-        });
-      } else {
+exports.update = async(req, res) => {
+    const id = req.params.id;
+    const data = req.body;
+    try{
+      const response = await Item.update(data.item, {where: {id: id}});
+      await Promise.all(data.itemFields.map(field => ItemFields.update(field, {where: {id: field.id}})));
+      if(response){
+        res.send({message: "Item was updated successfully"});
+      }
+      else{
         res.send({
           message: `Cannot update Item with id=${id}. Maybe Item was not found or req.body is empty!`,
         });
       }
-    })
-    .catch((err) => {
+    }
+    catch(err){
       res.status(500).send({
         message: "Error updating Item with id=" + id,
       });
-    });
+    }
 };
 
 // Delete an Item with the specified id in the request

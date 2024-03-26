@@ -65,7 +65,7 @@ exports.findOne = (req, res) => {
 };
 
 exports.findAllForItem = async(req, res) => {
-    const itemId = req.params.itemId;
+    const itemId = req.params.id;
     try{
         const data = await ItemInformation.findAll({where: [{itemId: itemId}]});
         if(data){

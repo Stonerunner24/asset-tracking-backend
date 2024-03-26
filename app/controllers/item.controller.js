@@ -25,7 +25,8 @@ exports.create = async(req, res) => {
         serialNum: req.body.serialNum,
         receivedDate: new Date(), 
         status: 'Unassigned',
-        productionYear: req.body.productionYear || null, 
+        initialValue: req.body.initialValue,
+        productionYear: req.body.prodYear || null, 
         warrantyEnd: req.body.warrantyEnd || null,
         modelId: req.body.modelId
     };
@@ -33,15 +34,6 @@ exports.create = async(req, res) => {
     console.log(item);
     try{
       const data = await Item.create(item);
-      for(const itemField of req.body.itemFields){
-        let values = {
-          value: itemField.value,
-          itemId: data.id,
-          fieldId: itemField.field.id
-        };
-        console.log('creating Field: \n' + values);
-        await ItemField.create(values);
-      }
       res.send(data);
     }
     catch(err){
